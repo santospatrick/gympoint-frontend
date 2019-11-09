@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { darken } from 'polished';
 
 export const Container = styled.div`
     display: flex;
@@ -18,6 +19,7 @@ export const Card = styled.div`
     padding: 30px;
 
     img {
+        margin-top: 20px;
         margin-bottom: 30px;
     }
 
@@ -57,5 +59,10 @@ export const Card = styled.div`
         border-radius: 4px;
         height: 45px;
         border: 0;
+        transition: background 0.2s;
+
+        &:hover {
+            background-color: ${darken(0.07, '#ee4d64')};
+        }
     }
 `;
