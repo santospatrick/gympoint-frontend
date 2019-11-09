@@ -25,6 +25,11 @@ module.exports = {
   ],
   rules: {
     'prettier/prettier': 'error',
-    'react/jsx-filename-extension': 'off'
+    'react/jsx-filename-extension': ['error', { extensions: ['.js', '.jsx'] }],
   },
+  settings: {
+    "import/resolver": {
+      "babel-module": {}
+    }
+  }
 };
