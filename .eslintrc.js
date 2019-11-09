@@ -21,11 +21,14 @@ module.exports = {
   },
   plugins: [
     'react',
-    'prettier'
+    'prettier',
+    'react-hooks'
   ],
   rules: {
     'prettier/prettier': 'error',
     'react/jsx-filename-extension': ['error', { extensions: ['.js', '.jsx'] }],
+    'react-hooks/rules-of-hooks': 'error',
+    'react-hooks/exhaustive-deps': 'warn'
   },
   settings: {
     "import/resolver": {
