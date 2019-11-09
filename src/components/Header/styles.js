@@ -59,10 +59,11 @@ export const Container = styled.header`
 
 export const Link = styled(RouterLink).attrs({
     activeStyle: {
-        color: '#444',
-        fontWeight: 'bold',
+        color: '#444'
     },
 })`
     font-size: 15px;
     color: #999;
+    font-weight: bold;
+    text-transform: uppercase;
 `;
