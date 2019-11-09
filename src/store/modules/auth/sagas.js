@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 import api from 'services/api';
 import history from 'services/history';
 
-import { SIGN_IN_REQUEST } from './actionTypes';
+import { SIGN_IN_REQUEST, SIGN_OUT } from './actionTypes';
 import { signInFailure, signInSuccess } from './actions';
 
 export function* signIn({ payload }) {
@@ -26,4 +26,11 @@ export function* signIn({ payload }) {
     }
 }
 
-export default all([takeLatest(SIGN_IN_REQUEST, signIn)]);
+export function signOut() {
+    history.push('/');
+}
+
+export default all([
+    takeLatest(SIGN_IN_REQUEST, signIn),
+    takeLatest(SIGN_OUT, signOut),
+]);

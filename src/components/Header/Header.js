@@ -1,9 +1,13 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
 import logo from 'assets/logo-red.svg';
 
+import { signOut } from 'store/modules/auth/actions';
 import { Container, Link, Wrapper } from './styles';
 
 function Header() {
+    const dispatch = useDispatch();
+
     return (
         <Wrapper>
             <Container>
@@ -26,7 +30,9 @@ function Header() {
                 </section>
                 <aside>
                     <span>Patrick Santos</span>
-                    <button type="button">sair do sistema</button>
+                    <button onClick={() => dispatch(signOut())} type="button">
+                        sair do sistema
+                    </button>
                 </aside>
             </Container>
         </Wrapper>

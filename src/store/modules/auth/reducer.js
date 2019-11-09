@@ -2,6 +2,7 @@ import {
     SIGN_IN_REQUEST,
     SIGN_IN_SUCCESS,
     SIGN_IN_FAILURE,
+    SIGN_OUT,
 } from './actionTypes';
 
 const initialState = {
@@ -25,6 +26,9 @@ export default (state = initialState, { type, payload }) => {
 
         case SIGN_IN_FAILURE:
             return { ...state, loading: false };
+
+        case SIGN_OUT:
+            return { ...state, token: null, signed: false };
 
         default:
             return state;
