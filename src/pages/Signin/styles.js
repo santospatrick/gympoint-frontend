@@ -29,7 +29,7 @@ export const Card = styled.div`
         flex-direction: column;
         margin-bottom: 20px;
 
-        span {
+        span:first-child {
             margin-bottom: 8px;
             font-weight: bold;
             color: #444;
@@ -49,6 +49,12 @@ export const Card = styled.div`
                 color: #999;
             }
         }
+
+        input ~ span {
+            font-size: 12px;
+            color: #ee4c63;
+            margin-top: 5px;
+        }
     }
 
     button {
@@ -60,6 +66,7 @@ export const Card = styled.div`
         height: 45px;
         border: 0;
         transition: background 0.2s;
+        margin-bottom: 20px;
 
         &:hover {
             background-color: ${darken(0.07, '#ee4d64')};

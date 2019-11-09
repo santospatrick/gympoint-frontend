@@ -1,31 +1,39 @@
 import React from 'react';
+import { Form, Input } from '@rocketseat/unform';
+import * as Yup from 'yup';
 import logo from 'assets/logo.svg';
 
 import { Container, Card } from './styles';
 
+const schema = Yup.object().shape({
+    email: Yup.string()
+        .email('E-mail inválido')
+        .required('Campo obrigatório'),
+    password: Yup.string().required('Campo obrigatório'),
+});
+
 function Signin() {
-    function handleSubmit(event) {
-        event.preventDefault();
-        console.log('submitted!');
+    function handleSubmit(data) {
+        console.log('data:', data);
     }
 
     return (
         <Container>
             <Card>
                 <img src={logo} alt="Logo" />
-                <form onSubmit={handleSubmit} noValidate>
-                    <label htmlFor="email">
+                <Form schema={schema} onSubmit={handleSubmit} noValidate>
+                    <label>
                         <span>Seu e-mail</span>
-                        <input
+                        <Input
                             name="email"
                             type="email"
                             placeholder="exemplo@email.com"
                         />
                     </label>
 
-                    <label htmlFor="password">
+                    <label>
                         <span>Sua senha</span>
-                        <input
+                        <Input
                             name="password"
                             type="password"
                             placeholder="*************"
@@ -33,7 +41,7 @@ function Signin() {
                     </label>
 
                     <button type="submit">Entrar no sistema</button>
-                </form>
+                </Form>
             </Card>
         </Container>
     );
