@@ -13,7 +13,7 @@ function Button({ text, Icon }) {
 }
 
 Button.propTypes = {
-    Icon: PropTypes.element,
+    Icon: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
     text: PropTypes.string.isRequired,
 };
 

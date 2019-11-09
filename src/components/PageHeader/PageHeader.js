@@ -21,7 +21,8 @@ PageHeader.propTypes = {
 };
 
 PageHeaderContent.propTypes = {
-    children: PropTypes.element.isRequired,
-}
+    children: PropTypes.oneOfType([PropTypes.element, PropTypes.array])
+        .isRequired,
+};
 
 export default PageHeader;

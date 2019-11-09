@@ -9,6 +9,7 @@ export const Container = styled.table`
 
     thead th {
         padding-bottom: 4px;
+        text-transform: uppercase;
     }
 
     tr + tr td {
@@ -24,4 +25,22 @@ export const Container = styled.table`
             text-align: right;
         }
     }
+`;
+
+const Button = styled.button.attrs({
+    type: 'button',
+})`
+    border: 0;
+    background: transparent;
+    font-size: 15px;
+    padding: 0;
+    margin-left: 23px;
+`;
+
+export const EditButton = styled(Button)`
+    color: #4d85ee;
+`;
+
+export const DeleteButton = styled(Button)`
+    color: #de3b3b;
 `;
