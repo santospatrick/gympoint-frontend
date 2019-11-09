@@ -1,4 +1,8 @@
-import { SIGN_IN_REQUEST, SIGN_IN_SUCCESS } from './actionTypes';
+import {
+    SIGN_IN_REQUEST,
+    SIGN_IN_SUCCESS,
+    SIGN_IN_FAILURE,
+} from './actionTypes';
 
 const initialState = {
     token: null,
@@ -18,6 +22,9 @@ export default (state = initialState, { type, payload }) => {
                 signed: true,
                 loading: false,
             };
+
+        case SIGN_IN_FAILURE:
+            return { ...state, loading: false };
 
         default:
             return state;
