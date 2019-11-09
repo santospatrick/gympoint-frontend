@@ -3,7 +3,8 @@ import { MdAdd } from 'react-icons/md';
 import PageHeader, { PageHeaderContent } from 'components/PageHeader';
 import Button from 'components/Button';
 import SearchBar from 'components/SearchBar';
-import { Container, Table, EditButton, DeleteButton } from './styles';
+import Table from 'components/Table';
+import { Container, EditButton, DeleteButton } from './styles';
 
 function Dashboard() {
     return (
