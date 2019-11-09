@@ -1,9 +1,20 @@
 import React from 'react';
+import { MdAdd } from 'react-icons/md';
+import PageHeader, { PageHeaderContent } from 'components/PageHeader';
+import Button from 'components/Button';
 import { Container, Table, EditButton, DeleteButton } from './styles';
 
 function Dashboard() {
     return (
         <Container>
+            <PageHeader title="Gerenciando alunos">
+                <PageHeaderContent>
+                    <Button text="Cadastrar" Icon={MdAdd} />
+                    <label>
+                        <input type="search" placeholder="Buscar aluno" />
+                    </label>
+                </PageHeaderContent>
+            </PageHeader>
             <Table>
                 <thead>
                     <tr>
