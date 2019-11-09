@@ -1,7 +1,21 @@
-import { createStore } from 'redux';
-import reactotron from 'config/reactotron';
-import rootReducer from './modules/rootReducer';
+import { createStore, applyMiddleware, compose } from 'redux';
+import createSagaMiddleware from 'redux-saga';
 
-const store = createStore(rootReducer, reactotron.createEnhancer());
+import rootReducer from './modules/rootReducer';
+import rootSaga from './modules/rootSaga';
+
+const sagaMonitor =
+    process.env.NODE_ENV === 'development'
+        ? console.tron.createSagaMonitor()
+        : null;
+
+const sagaMiddleware = createSagaMiddleware({ sagaMonitor });
+
+const store = createStore(
+    rootReducer,
+    compose(applyMiddleware(sagaMiddleware), console.tron.createEnhancer()),
+);
+
+sagaMiddleware.run(rootSaga);
 
 export default store;

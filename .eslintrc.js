@@ -27,8 +27,10 @@ module.exports = {
   rules: {
     'prettier/prettier': 'error',
     'react/jsx-filename-extension': ['error', { extensions: ['.js', '.jsx'] }],
+    'import/prefer-default-export': 'off',
     'react-hooks/rules-of-hooks': 'error',
-    'react-hooks/exhaustive-deps': 'warn'
+    'react-hooks/exhaustive-deps': 'warn',
+    'no-console': ['error', { allow: ['tron'] }],
   },
   settings: {
     "import/resolver": {

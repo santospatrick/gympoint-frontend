@@ -1,8 +1,14 @@
 import Reactotron from 'reactotron-react-js';
+import sagaPlugin from 'reactotron-redux-saga';
 import { reactotronRedux } from 'reactotron-redux';
 
-const reactotron = Reactotron.configure({ name: 'Gympoint' })
-    .use(reactotronRedux())
-    .connect();
+if (process.env.NODE_ENV === 'development') {
+    const tron = Reactotron.configure({ name: 'Gympoint' })
+        .use(reactotronRedux())
+        .use(sagaPlugin())
+        .connect();
 
-export default reactotron;
+    console.tron = tron;
+
+    tron.clear();
+}
