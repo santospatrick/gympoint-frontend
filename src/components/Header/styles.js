@@ -2,13 +2,12 @@ import styled from 'styled-components';
 import { NavLink as RouterLink } from 'react-router-dom';
 
 export const Wrapper = styled.div`
-    padding: 0 30px;
     background: #fff;
-    padding: 0 30px;
 `;
 
 export const Container = styled.header`
-    max-width: 900px;
+    max-width: 1600px;
+    padding: 0 30px;
     margin: 0 auto;
     display: flex;
     flex-direction: row;
@@ -59,7 +58,7 @@ export const Container = styled.header`
 
 export const Link = styled(RouterLink).attrs({
     activeStyle: {
-        color: '#444'
+        color: '#444',
     },
 })`
     font-size: 15px;

@@ -3,12 +3,12 @@ import styled from 'styled-components';
 export const Container = styled.div`
     width: 100%;
     padding: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
 `;
 
 export const Table = styled.table`
     width: 100%;
-    max-width: 1200px;
-    margin: 0 auto;
     background: #fff;
     padding: 30px 30px 15px;
     text-align: left;
