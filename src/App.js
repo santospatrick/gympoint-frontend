@@ -1,7 +1,15 @@
 import React from 'react';
+import { Provider } from 'react-redux';
+
+import Signin from 'pages/Signin';
+import store from './store';
 
 function App() {
-    return <div>app</div>;
+    return (
+        <Provider store={store}>
+            <Signin />
+        </Provider>
+    );
 }
 
 export default App;
