@@ -8,7 +8,8 @@ import Button from 'components/Button';
 import SearchBar from 'components/SearchBar';
 import Table from 'components/Table';
 import { getStudentsRequest } from 'store/modules/students/actions';
-import { Container } from './styles';
+import history from 'services/history';
+import { PageWrapper } from 'styles/global';
 
 const rows = [
     { label: 'Nome', attribute: 'name' },
@@ -27,10 +28,14 @@ function Students() {
     }, [dispatch, value]);
 
     return (
-        <Container>
+        <PageWrapper>
             <PageHeader title="Gerenciando alunos">
                 <PageHeaderContent>
-                    <Button text="Cadastrar" Icon={MdAdd} />
+                    <Button
+                        onClick={() => history.push('/students/new')}
+                        text="Cadastrar"
+                        Icon={MdAdd}
+                    />
                     <SearchBar
                         onChange={event => {
                             setText(event.target.value);
@@ -49,7 +54,7 @@ function Students() {
                 }}
                 keyExtractor={item => String(item.id)}
             />
-        </Container>
+        </PageWrapper>
     );
 }
 

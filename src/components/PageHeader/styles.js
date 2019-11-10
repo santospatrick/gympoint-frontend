@@ -17,7 +17,8 @@ export const Content = styled.div`
     flex-direction: row;
     align-items: center;
 
-    button + label {
+    button + label,
+    button + button {
         margin-left: 16px;
     }
 `;

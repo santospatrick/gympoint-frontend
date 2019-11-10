@@ -1,6 +1,26 @@
-import { createGlobalStyle } from 'styled-components';
+import styled, { createGlobalStyle } from 'styled-components';
 
 import 'react-toastify/dist/ReactToastify.min.css';
+
+export const PageWrapper = styled.div`
+    width: 100%;
+    padding: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+`;
+
+export const PageCard = styled.div`
+    background: #fff;
+    border-radius: 4px;
+    width: 100%;
+    padding: 30px 30px 20px;
+`;
+
+export const InputsInline = styled.div`
+    display: grid;
+    grid-auto-flow: column;
+    grid-gap: 20px;
+`;
 
 export default createGlobalStyle`
     @import url('https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap');
