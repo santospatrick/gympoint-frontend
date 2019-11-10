@@ -5,12 +5,15 @@ import Signin from 'pages/Signin';
 import Students from 'pages/Students';
 import StudentsRegister from 'pages/StudentsRegister';
 
+import PlansRegister from 'pages/PlansRegister';
 import Route from './Route';
 
 export default function Routes() {
     return (
         <Switch>
             <Route path="/" exact component={Signin} />
+
+            {/* Students */}
             <Route path="/students" exact component={Students} isPrivate />
             <Route
                 path="/students/new"
@@ -22,6 +25,14 @@ export default function Routes() {
                 path="/students/:id"
                 exact
                 component={StudentsRegister}
+                isPrivate
+            />
+
+            {/* Plans */}
+            <Route
+                path="/plans/new"
+                exact
+                component={PlansRegister}
                 isPrivate
             />
         </Switch>
