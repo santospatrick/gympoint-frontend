@@ -11,6 +11,7 @@ import { Form } from '@rocketseat/unform';
 import PageHeader, { PageHeaderContent } from 'components/PageHeader';
 import Button from 'components/Button';
 import Input from 'components/Input';
+// import InputMask from 'components/InputMask';
 import history from 'services/history';
 import { postStudentRequest } from 'store/modules/students/actions';
 import api from 'services/api';
@@ -65,7 +66,7 @@ function StudentsRegister({ match }) {
                 <PageHeader title="Cadastro de aluno">
                     <PageHeaderContent>
                         <Button
-                            onClick={() => history.goBack()}
+                            onClick={() => history.push('/students')}
                             text="Voltar"
                             Icon={MdKeyboardArrowLeft}
                             secondary
@@ -87,12 +88,61 @@ function StudentsRegister({ match }) {
                     />
                     <InputsInline>
                         <Input label="Idade" name="age" type="number" />
-                        <InputMask mask="99.9kg" alwaysShowMask>
-                            {() => <Input label="Peso (em kg)" name="weight" />}
-                        </InputMask>
-                        <InputMask mask="9.99m" alwaysShowMask>
-                            {() => <Input label="Altura" name="height" />}
-                        </InputMask>
+
+                        {/* TODO:
+                            InputMask defaultValue cannot be set
+                            asynchronously, so component waits for backend
+                            to give a response to render input.
+                            Should i continue to use react-input-mask + unform?
+                        */}
+                        {student.weight && (
+                            <InputMask
+                                mask="99.9kg"
+                                defaultValue={
+                                    student.weight.toString().length === 2
+                                        ? `${student.weight}.0`
+                                        : student.weight
+                                }
+                                alwaysShowMask
+                            >
+                                {() => (
+                                    <Input label="Peso (em kg)" name="weight" />
+                                )}
+                            </InputMask>
+                        )}
+
+                        {/* TODO:
+                            This input is rendered when nothing is loaded from backend
+                            and it does not render right with ternary (dont know why yet)
+                        */}
+                        {!Object.keys(student).length && (
+                            <InputMask mask="99.9kg" alwaysShowMask>
+                                {() => (
+                                    <Input label="Peso (em kg)" name="weight" />
+                                )}
+                            </InputMask>
+                        )}
+                        {/* TODO:
+                            InputMask defaultValue cannot be set
+                            asynchronously, so component waits for backend
+                            to give a response to render input.
+                            Should i continue to use react-input-mask + unform?
+                        */}
+                        {student.height && (
+                            <InputMask
+                                mask="9.99m"
+                                defaultValue={student.height}
+                                alwaysShowMask
+                            >
+                                {() => <Input label="Altura" name="height" />}
+                            </InputMask>
+                        )}
+
+                        {!Object.keys(student).length && (
+                            <InputMask mask="9.99m" alwaysShowMask>
+                                {() => <Input label="Altura" name="height" />}
+                            </InputMask>
+                        )}
                     </InputsInline>
                 </PageCard>
             </Form>
