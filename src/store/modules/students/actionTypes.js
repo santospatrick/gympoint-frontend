@@ -1,0 +1,3 @@
+export const GET_STUDENTS_REQUEST = '@students/GET_STUDENTS_REQUEST';
+export const GET_STUDENTS_SUCCESS = '@students/GET_STUDENTS_SUCCESS';
+export const GET_STUDENTS_FAILURE = '@students/GET_STUDENTS_FAILURE';
