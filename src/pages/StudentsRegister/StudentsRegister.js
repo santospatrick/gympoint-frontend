@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import ReactRouterPropTypes from 'react-router-prop-types';
 import * as Yup from 'yup';
 import InputMask from 'react-input-mask';
 import { useDispatch } from 'react-redux';
@@ -12,6 +13,7 @@ import Button from 'components/Button';
 import Input from 'components/Input';
 import history from 'services/history';
 import { postStudentRequest } from 'store/modules/students/actions';
+import api from 'services/api';
 
 const schema = Yup.object().shape({
     name: Yup.string().required('Campo obrigatório'),
@@ -26,7 +28,8 @@ const schema = Yup.object().shape({
     height: Yup.string().required('Campo obrigatório'),
 });
 
-function StudentsRegister() {
+function StudentsRegister({ match }) {
+    const [student, setStudent] = useState({});
     const dispatch = useDispatch();
 
     function handleSubmit(data) {
@@ -39,9 +42,26 @@ function StudentsRegister() {
         dispatch(postStudentRequest(newData));
     }
 
+    useEffect(() => {
+        const { id } = match.params;
+        if (!id) return;
+
+        async function loadStudent() {
+            const response = await api.get(`students/${parseInt(id, 10)}`);
+            setStudent(response.data);
+        }
+
+        loadStudent();
+    }, [match.params, match.params.id]);
+
     return (
         <PageWrapper>
-            <Form schema={schema} onSubmit={handleSubmit} noValidate>
+            <Form
+                initialData={student}
+                schema={schema}
+                onSubmit={handleSubmit}
+                noValidate
+            >
                 <PageHeader title="Cadastro de aluno">
                     <PageHeaderContent>
                         <Button
@@ -79,5 +99,9 @@ function StudentsRegister() {
         </PageWrapper>
     );
 }
+
+StudentsRegister.propTypes = {
+    match: ReactRouterPropTypes.match.isRequired,
+};
 
 export default StudentsRegister;

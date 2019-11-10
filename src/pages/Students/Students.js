@@ -47,7 +47,7 @@ function Students() {
                 rows={rows}
                 data={data}
                 onClickEdit={item => {
-                    console.log('onClickEdit | item:', item);
+                    history.push(`/students/${item.id}`);
                 }}
                 onClickDelete={item => {
                     console.log('onClickDelete | item:', item);

@@ -18,6 +18,12 @@ export default function Routes() {
                 component={StudentsRegister}
                 isPrivate
             />
+            <Route
+                path="/students/:id"
+                exact
+                component={StudentsRegister}
+                isPrivate
+            />
         </Switch>
     );
 }
