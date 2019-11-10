@@ -2,6 +2,9 @@ import {
     GET_STUDENTS_REQUEST,
     GET_STUDENTS_SUCCESS,
     GET_STUDENTS_FAILURE,
+    POST_STUDENT_REQUEST,
+    POST_STUDENT_SUCCESS,
+    POST_STUDENT_FAILURE,
 } from './actionTypes';
 
 const initialState = {
@@ -19,6 +22,15 @@ export default (state = initialState, { type, payload }) => {
 
         case GET_STUDENTS_FAILURE:
             return { ...state, loading: false };
+
+        case POST_STUDENT_REQUEST:
+            return { ...state, loading: true };
+
+        case POST_STUDENT_SUCCESS:
+            return { ...state, loading: true };
+
+        case POST_STUDENT_FAILURE:
+            return { ...state, loading: true };
 
         default:
             return state;

@@ -2,6 +2,9 @@ import {
     GET_STUDENTS_REQUEST,
     GET_STUDENTS_SUCCESS,
     GET_STUDENTS_FAILURE,
+    POST_STUDENT_REQUEST,
+    POST_STUDENT_SUCCESS,
+    POST_STUDENT_FAILURE,
 } from './actionTypes';
 
 export const getStudentsRequest = search => ({
@@ -14,7 +17,20 @@ export const getStudentsSuccess = list => ({
     payload: { list },
 });
 
-export const getStudentsFailure = list => ({
+export const getStudentsFailure = () => ({
     type: GET_STUDENTS_FAILURE,
-    payload: { list },
+});
+
+export const postStudentRequest = student => ({
+    type: POST_STUDENT_REQUEST,
+    payload: { student },
+});
+
+export const postStudentSuccess = student => ({
+    type: POST_STUDENT_SUCCESS,
+    payload: { student },
+});
+
+export const postStudentFailure = () => ({
+    type: POST_STUDENT_FAILURE,
 });
