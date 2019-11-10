@@ -5,6 +5,7 @@ import {
     POST_STUDENT_REQUEST,
     POST_STUDENT_SUCCESS,
     POST_STUDENT_FAILURE,
+    PUT_STUDENT_REQUEST,
 } from './actionTypes';
 
 export const getStudentsRequest = search => ({
@@ -33,4 +34,9 @@ export const postStudentSuccess = student => ({
 
 export const postStudentFailure = () => ({
     type: POST_STUDENT_FAILURE,
+});
+
+export const putStudentRequest = student => ({
+    type: PUT_STUDENT_REQUEST,
+    payload: { student },
 });

@@ -3,7 +3,11 @@ import { all, takeLatest, call, put } from 'redux-saga/effects';
 import api from 'services/api';
 import { toast } from 'react-toastify';
 import history from 'services/history';
-import { GET_STUDENTS_REQUEST, POST_STUDENT_REQUEST } from './actionTypes';
+import {
+    GET_STUDENTS_REQUEST,
+    POST_STUDENT_REQUEST,
+    PUT_STUDENT_REQUEST,
+} from './actionTypes';
 import {
     getStudentsSuccess,
     getStudentsFailure,
@@ -58,7 +62,19 @@ function* postStudent({ payload }) {
     }
 }
 
+function* putStudent({ payload }) {
+    try {
+        const { student } = payload;
+
+        yield api.put('students', student);
+        toast.success(`Estudante: "${student.name}" atualizado com sucesso!`);
+    } catch (error) {
+        toast.error('Não foi possível atualizar estudante');
+    }
+}
+
 export default all([
     takeLatest(GET_STUDENTS_REQUEST, setStudents),
     takeLatest(POST_STUDENT_REQUEST, postStudent),
+    takeLatest(PUT_STUDENT_REQUEST, putStudent),
 ]);

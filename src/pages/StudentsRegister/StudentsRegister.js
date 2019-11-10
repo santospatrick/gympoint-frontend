@@ -11,9 +11,11 @@ import { Form } from '@rocketseat/unform';
 import PageHeader, { PageHeaderContent } from 'components/PageHeader';
 import Button from 'components/Button';
 import Input from 'components/Input';
-// import InputMask from 'components/InputMask';
 import history from 'services/history';
-import { postStudentRequest } from 'store/modules/students/actions';
+import {
+    postStudentRequest,
+    putStudentRequest,
+} from 'store/modules/students/actions';
 import api from 'services/api';
 
 const schema = Yup.object().shape({
@@ -32,6 +34,7 @@ const schema = Yup.object().shape({
 function StudentsRegister({ match }) {
     const [student, setStudent] = useState({});
     const dispatch = useDispatch();
+    const { id } = match.params;
 
     function handleSubmit(data) {
         const newData = {
@@ -40,11 +43,14 @@ function StudentsRegister({ match }) {
             height: parseInt(data.height.replace('.', '').replace('m', ''), 10),
         };
 
-        dispatch(postStudentRequest(newData));
+        if (id) {
+            dispatch(putStudentRequest(newData));
+        } else {
+            dispatch(postStudentRequest(newData));
+        }
     }
 
     useEffect(() => {
-        const { id } = match.params;
         if (!id) return;
 
         async function loadStudent() {
@@ -53,7 +59,7 @@ function StudentsRegister({ match }) {
         }
 
         loadStudent();
-    }, [match.params, match.params.id]);
+    }, [id]);
 
     return (
         <PageWrapper>
