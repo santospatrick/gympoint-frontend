@@ -1,5 +1,6 @@
 import React from 'react';
 import * as Yup from 'yup';
+import InputMask from 'react-input-mask';
 
 import { PageWrapper, PageCard, InputsInline } from 'styles/global';
 import { MdDone, MdKeyboardArrowLeft } from 'react-icons/md';
@@ -15,18 +16,9 @@ const schema = Yup.object().shape({
     email: Yup.string()
         .email('E-mail inválido')
         .required('Campo obrigatório'),
-    age: Yup.number()
-        .required('Campo obrigatório')
-        .positive('Idade deve ser maior que 0')
-        .typeError('Número inválido'),
-    weight: Yup.number()
-        .required('Campo obrigatório')
-        .positive('Peso deve ser maior que 0')
-        .typeError('Número inválido'),
-    height: Yup.number()
-        .required('Campo obrigatório')
-        .positive('Altura deve ser maior que 0')
-        .typeError('Número inválido'),
+    age: Yup.string().required('Campo obrigatório'),
+    weight: Yup.string().required('Campo obrigatório'),
+    height: Yup.string().required('Campo obrigatório'),
 });
 
 function StudentsRegister() {
@@ -61,13 +53,13 @@ function StudentsRegister() {
                         placeholder="exemplo@email.com"
                     />
                     <InputsInline>
-                        <Input label="Idade" name="age" type="number" />
-                        <Input
-                            label="Peso (em kg)"
-                            name="weight"
-                            type="number"
-                        />
-                        <Input label="Altura" name="height" type="number" />
+                        <Input label="Idade" name="age" />
+                        <InputMask mask="99.9kg" alwaysShowMask>
+                            {() => <Input label="Peso (em kg)" name="weight" />}
+                        </InputMask>
+                        <InputMask mask="99.9m" alwaysShowMask>
+                            {() => <Input label="Altura" name="height" />}
+                        </InputMask>
                     </InputsInline>
                 </PageCard>
             </Form>
