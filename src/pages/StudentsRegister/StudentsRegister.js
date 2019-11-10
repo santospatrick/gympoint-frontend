@@ -8,6 +8,7 @@ import { Form } from '@rocketseat/unform';
 import PageHeader, { PageHeaderContent } from 'components/PageHeader';
 import Button from 'components/Button';
 import Input from 'components/Input';
+import history from 'services/history';
 
 const schema = Yup.object().shape({
     name: Yup.string().required('Campo obrigatório'),
@@ -39,6 +40,7 @@ function StudentsRegister() {
                 <PageHeader title="Cadastro de aluno">
                     <PageHeaderContent>
                         <Button
+                            onClick={() => history.goBack()}
                             text="Voltar"
                             Icon={MdKeyboardArrowLeft}
                             secondary

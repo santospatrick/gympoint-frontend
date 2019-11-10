@@ -1,9 +1,10 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import logo from 'assets/logo-red.svg';
 
 import { signOut } from 'store/modules/auth/actions';
-import { Container, Link, Wrapper } from './styles';
+import { Container, RouterLink, Wrapper } from './styles';
 
 function Header() {
     const dispatch = useDispatch();
@@ -12,19 +13,25 @@ function Header() {
         <Wrapper>
             <Container>
                 <section>
-                    <img src={logo} alt="Logo" />
+                    <Link to="/students">
+                        <img src={logo} alt="Logo" />
+                    </Link>
                     <ul>
                         <li>
-                            <Link to="/students">Alunos</Link>
+                            <RouterLink to="/students">Alunos</RouterLink>
                         </li>
                         <li>
-                            <Link to="/plans">Planos</Link>
+                            <RouterLink to="/plans">Planos</RouterLink>
                         </li>
                         <li>
-                            <Link to="/registrations">Matrículas</Link>
+                            <RouterLink to="/registrations">
+                                Matrículas
+                            </RouterLink>
                         </li>
                         <li>
-                            <Link to="/help-orders">Pedidos de auxílio</Link>
+                            <RouterLink to="/help-orders">
+                                Pedidos de auxílio
+                            </RouterLink>
                         </li>
                     </ul>
                 </section>

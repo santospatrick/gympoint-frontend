@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { NavLink as RouterLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 export const Wrapper = styled.div`
     background: #fff;
@@ -56,7 +56,7 @@ export const Container = styled.header`
     }
 `;
 
-export const Link = styled(RouterLink).attrs({
+export const RouterLink = styled(NavLink).attrs({
     activeStyle: {
         color: '#444',
     },
