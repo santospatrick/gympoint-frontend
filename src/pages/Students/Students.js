@@ -16,7 +16,7 @@ const rows = [
     { label: 'Idade', attribute: 'age' },
 ];
 
-function Dashboard() {
+function Students() {
     const dispatch = useDispatch();
     const [text, setText] = useState('');
     const [value] = useDebounce(text, 250);
@@ -53,4 +53,4 @@ function Dashboard() {
     );
 }
 
-export default Dashboard;
+export default Students;

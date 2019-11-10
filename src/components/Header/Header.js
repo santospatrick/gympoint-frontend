@@ -15,7 +15,7 @@ function Header() {
                     <img src={logo} alt="Logo" />
                     <ul>
                         <li>
-                            <Link to="/dashboard">Alunos</Link>
+                            <Link to="/students">Alunos</Link>
                         </li>
                         <li>
                             <Link to="/plans">Planos</Link>
