@@ -33,7 +33,7 @@ function PlansRegister({ match }) {
     const plan = useSelector(state => state.plans.item);
     const dispatch = useDispatch();
     const [duration, setDuration] = useState('');
-    const [price, setPrice] = useState(0);
+    const [price, setPrice] = useState('');
     const { id } = match.params;
 
     const handleSubmit = useCallback(
