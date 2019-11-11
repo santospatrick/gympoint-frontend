@@ -10,7 +10,7 @@ import PageHeader, { PageHeaderContent } from 'components/PageHeader';
 import Button from 'components/Button';
 import history from 'services/history';
 import Input from 'components/Input';
-import { postPlanRequest } from 'store/modules/plans/actions';
+import { postPlanRequest, putPlanRequest } from 'store/modules/plans/actions';
 import api from 'services/api';
 
 const schema = Yup.object().shape({
@@ -27,9 +27,13 @@ function PlansRegister({ match }) {
     const handleSubmit = useCallback(
         data => {
             const newData = { ...data, duration, price };
-            dispatch(postPlanRequest(newData));
+            if (id) {
+                dispatch(putPlanRequest({ id, ...newData }));
+            } else {
+                dispatch(postPlanRequest(newData));
+            }
         },
-        [dispatch, duration, price],
+        [dispatch, duration, id, price],
     );
 
     const total = useMemo(() => duration * price, [duration, price]);
