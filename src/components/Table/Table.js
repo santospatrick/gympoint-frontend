@@ -14,10 +14,7 @@ function Table({ rows, data, onClickEdit, onClickDelete, keyExtractor }) {
                         <th
                             key={`header-${row.attribute}`}
                             style={{
-                                textAlign:
-                                    row.align && row.align === 'center'
-                                        ? 'center'
-                                        : 'left',
+                                textAlign: row.align || 'left',
                             }}
                         >
                             {row.label}
@@ -33,10 +30,7 @@ function Table({ rows, data, onClickEdit, onClickDelete, keyExtractor }) {
                             <td
                                 key={`data-${row.attribute}`}
                                 style={{
-                                    textAlign:
-                                        row.align && row.align === 'center'
-                                            ? 'center'
-                                            : 'left',
+                                    textAlign: row.align || 'left',
                                 }}
                             >
                                 {item[row.attribute]}
