@@ -7,6 +7,7 @@ import StudentsRegister from 'pages/StudentsRegister';
 
 import PlansRegister from 'pages/PlansRegister';
 import Plans from 'pages/Plans';
+import RegistrationsRegister from 'pages/RegistrationsRegister';
 import Route from './Route';
 
 export default function Routes() {
@@ -42,6 +43,14 @@ export default function Routes() {
                 path="/plans/:id"
                 exact
                 component={PlansRegister}
+                isPrivate
+            />
+
+            {/* Registrations */}
+            <Route
+                path="/registrations/new"
+                exact
+                component={RegistrationsRegister}
                 isPrivate
             />
         </Switch>
