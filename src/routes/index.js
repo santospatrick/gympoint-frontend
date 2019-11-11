@@ -6,6 +6,7 @@ import Students from 'pages/Students';
 import StudentsRegister from 'pages/StudentsRegister';
 
 import PlansRegister from 'pages/PlansRegister';
+import Plans from 'pages/Plans';
 import Route from './Route';
 
 export default function Routes() {
@@ -29,6 +30,8 @@ export default function Routes() {
             />
 
             {/* Plans */}
+            <Route path="/plans" exact component={Plans} isPrivate />
+
             <Route
                 path="/plans/new"
                 exact

@@ -3,9 +3,37 @@ import {
     GET_PLAN_BY_ID_SUCCESS,
     GET_PLAN_BY_ID_FAILURE,
     CLEAN_PLAN_ITEM,
+    GET_PLANS_REQUEST,
     POST_PLAN_REQUEST,
     PUT_PLAN_REQUEST,
+    GET_PLANS_SUCCESS,
+    GET_PLANS_FAILURE,
+    DELETE_PLAN_REQUEST,
+    DELETE_PLAN_SUCCESS,
 } from './actionTypes';
+
+export const getPlansRequest = () => ({
+    type: GET_PLANS_REQUEST,
+});
+
+export const getPlansSuccess = list => ({
+    type: GET_PLANS_SUCCESS,
+    payload: { list },
+});
+
+export const getPlansFailure = () => ({
+    type: GET_PLANS_FAILURE,
+});
+
+export const deletePlanRequest = item => ({
+    type: DELETE_PLAN_REQUEST,
+    payload: { item },
+});
+
+export const deletePlanSuccess = id => ({
+    type: DELETE_PLAN_SUCCESS,
+    payload: { id },
+});
 
 export const getPlanByIdRequest = id => ({
     type: GET_PLAN_BY_ID_REQUEST,
