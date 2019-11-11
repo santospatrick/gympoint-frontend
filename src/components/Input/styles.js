@@ -21,6 +21,7 @@ export const Container = styled.div`
         color: #666;
         height: 45px;
         padding: 0 15px;
+        background: ${props => props.disabled && '#F5F5F5'};
 
         &::placeholder {
             color: #999;

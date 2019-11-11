@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { useField } from '@rocketseat/unform';
 import { Container } from './styles';
 
-function Input({ name, type, label, ...rest }) {
+function Input({ name, type, label, disabled, ...rest }) {
     const ref = useRef(null);
     const { fieldName, registerField, defaultValue, error } = useField(name);
 
@@ -17,10 +17,11 @@ function Input({ name, type, label, ...rest }) {
     }, [ref.current, fieldName]) // eslint-disable-line
 
     return (
-        <Container>
+        <Container disabled={disabled}>
             <label htmlFor={fieldName}>{label}</label>
             <input
                 {...rest}
+                disabled={disabled}
                 defaultValue={defaultValue}
                 type={type}
                 name={fieldName}
@@ -35,10 +36,12 @@ Input.propTypes = {
     name: PropTypes.string.isRequired,
     label: PropTypes.string.isRequired,
     type: PropTypes.string,
+    disabled: PropTypes.bool,
 };
 
 Input.defaultProps = {
     type: 'text',
+    disabled: false,
 };
 
 export default Input;

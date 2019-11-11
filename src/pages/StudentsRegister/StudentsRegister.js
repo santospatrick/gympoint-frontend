@@ -109,6 +109,7 @@ function StudentsRegister({ match }) {
                                         ? `${student.weight}.0`
                                         : student.weight
                                 }
+                                disabled={false}
                                 alwaysShowMask
                             >
                                 {() => (
@@ -122,7 +123,11 @@ function StudentsRegister({ match }) {
                             and it does not render right with ternary (dont know why yet)
                         */}
                         {!Object.keys(student).length && (
-                            <InputMask mask="99.9kg" alwaysShowMask>
+                            <InputMask
+                                mask="99.9kg"
+                                disabled={false}
+                                alwaysShowMask
+                            >
                                 {() => (
                                     <Input label="Peso (em kg)" name="weight" />
                                 )}
@@ -139,13 +144,18 @@ function StudentsRegister({ match }) {
                                 mask="9.99m"
                                 defaultValue={student.height}
                                 alwaysShowMask
+                                disabled={false}
                             >
                                 {() => <Input label="Altura" name="height" />}
                             </InputMask>
                         )}
 
                         {!Object.keys(student).length && (
-                            <InputMask mask="9.99m" alwaysShowMask>
+                            <InputMask
+                                mask="9.99m"
+                                alwaysShowMask
+                                disabled={false}
+                            >
                                 {() => <Input label="Altura" name="height" />}
                             </InputMask>
                         )}
