@@ -35,6 +35,12 @@ export default function Routes() {
                 component={PlansRegister}
                 isPrivate
             />
+            <Route
+                path="/plans/:id"
+                exact
+                component={PlansRegister}
+                isPrivate
+            />
         </Switch>
     );
 }

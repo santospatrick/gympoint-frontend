@@ -1,4 +1,5 @@
-import React, { useState, useCallback, useMemo } from 'react';
+import React, { useState, useCallback, useMemo, useEffect } from 'react';
+import ReactRouterPropTypes from 'react-router-prop-types';
 import { useDispatch } from 'react-redux';
 import * as Yup from 'yup';
 import { Form } from '@rocketseat/unform';
@@ -10,15 +11,18 @@ import Button from 'components/Button';
 import history from 'services/history';
 import Input from 'components/Input';
 import { postPlanRequest } from 'store/modules/plans/actions';
+import api from 'services/api';
 
 const schema = Yup.object().shape({
     title: Yup.string('Título inválido').required('Campo obrigatório'),
 });
 
-function PlansRegister() {
+function PlansRegister({ match }) {
+    const [plan, setPlan] = useState({});
     const dispatch = useDispatch();
     const [duration, setDuration] = useState('');
     const [price, setPrice] = useState(0);
+    const { id } = match.params;
 
     const handleSubmit = useCallback(
         data => {
@@ -30,9 +34,24 @@ function PlansRegister() {
 
     const total = useMemo(() => duration * price, [duration, price]);
 
+    useEffect(() => {
+        if (!id) return;
+
+        async function loadPlan() {
+            const response = await api.get(`plans/${parseInt(id, 10)}`);
+            const { duration: oldDuration, price: oldPrice } = response.data;
+            setPlan(response.data);
+            setPrice(oldPrice);
+            setDuration(oldDuration);
+        }
+
+        loadPlan();
+    }, [id]);
+
     return (
         <PageWrapper>
             <Form
+                initialData={plan}
                 schema={schema}
                 onSubmit={handleSubmit}
                 context={{ duration, total, price }}
@@ -78,5 +97,9 @@ function PlansRegister() {
         </PageWrapper>
     );
 }
+
+PlansRegister.propTypes = {
+    match: ReactRouterPropTypes.match.isRequired,
+};
 
 export default PlansRegister;
