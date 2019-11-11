@@ -11,7 +11,17 @@ function Table({ rows, data, onClickEdit, onClickDelete, keyExtractor }) {
             <thead>
                 <tr>
                     {rows.map(row => (
-                        <th key={`header-${row.attribute}`}>{row.label}</th>
+                        <th
+                            key={`header-${row.attribute}`}
+                            style={{
+                                textAlign:
+                                    row.align && row.align === 'center'
+                                        ? 'center'
+                                        : 'left',
+                            }}
+                        >
+                            {row.label}
+                        </th>
                     ))}
                     <th />
                 </tr>
@@ -20,7 +30,15 @@ function Table({ rows, data, onClickEdit, onClickDelete, keyExtractor }) {
                 {data.map(item => (
                     <tr key={keyExtractor(item)}>
                         {rows.map(row => (
-                            <td key={`data-${row.attribute}`}>
+                            <td
+                                key={`data-${row.attribute}`}
+                                style={{
+                                    textAlign:
+                                        row.align && row.align === 'center'
+                                            ? 'center'
+                                            : 'left',
+                                }}
+                            >
                                 {item[row.attribute]}
                             </td>
                         ))}

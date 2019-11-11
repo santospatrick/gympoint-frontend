@@ -17,7 +17,7 @@ import { PageWrapper } from 'styles/global';
 const rows = [
     { label: 'Nome', attribute: 'name' },
     { label: 'E-mail', attribute: 'email' },
-    { label: 'Idade', attribute: 'age' },
+    { label: 'Idade', attribute: 'age', align: 'center' },
 ];
 
 function Students() {
