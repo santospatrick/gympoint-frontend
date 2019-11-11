@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useMemo, useEffect } from 'react';
 import ReactRouterPropTypes from 'react-router-prop-types';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import * as Yup from 'yup';
 import { Form } from '@rocketseat/unform';
 import { MdKeyboardArrowLeft, MdDone } from 'react-icons/md';
@@ -10,15 +10,19 @@ import PageHeader, { PageHeaderContent } from 'components/PageHeader';
 import Button from 'components/Button';
 import history from 'services/history';
 import Input from 'components/Input';
-import { postPlanRequest, putPlanRequest } from 'store/modules/plans/actions';
-import api from 'services/api';
+import {
+    postPlanRequest,
+    putPlanRequest,
+    getPlanByIdRequest,
+    cleanPlanItem,
+} from 'store/modules/plans/actions';
 
 const schema = Yup.object().shape({
     title: Yup.string('Título inválido').required('Campo obrigatório'),
 });
 
 function PlansRegister({ match }) {
-    const [plan, setPlan] = useState({});
+    const plan = useSelector(state => state.plans.item);
     const dispatch = useDispatch();
     const [duration, setDuration] = useState('');
     const [price, setPrice] = useState(0);
@@ -39,18 +43,22 @@ function PlansRegister({ match }) {
     const total = useMemo(() => duration * price, [duration, price]);
 
     useEffect(() => {
+        return () => {
+            dispatch(cleanPlanItem());
+        };
+    }, [dispatch]);
+
+    useEffect(() => {
         if (!id) return;
+        dispatch(getPlanByIdRequest(id));
+    }, [id, dispatch]);
 
-        async function loadPlan() {
-            const response = await api.get(`plans/${parseInt(id, 10)}`);
-            const { duration: oldDuration, price: oldPrice } = response.data;
-            setPlan(response.data);
-            setPrice(oldPrice);
-            setDuration(oldDuration);
+    useEffect(() => {
+        if (plan.id) {
+            setDuration(plan.duration);
+            setPrice(plan.price);
         }
-
-        loadPlan();
-    }, [id]);
+    }, [plan, plan.id]);
 
     return (
         <PageWrapper>
@@ -63,7 +71,7 @@ function PlansRegister({ match }) {
                 <PageHeader title="Cadastro de plano">
                     <PageHeaderContent>
                         <Button
-                            onClick={() => history.push('/students')}
+                            onClick={() => history.push('/plans')}
                             text="Voltar"
                             Icon={MdKeyboardArrowLeft}
                             secondary

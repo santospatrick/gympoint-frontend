@@ -1,9 +1,25 @@
-import { all, takeLatest, call } from 'redux-saga/effects';
+import { all, takeLatest, call, put } from 'redux-saga/effects';
 
 import api from 'services/api';
 import { toast } from 'react-toastify';
 import history from 'services/history';
-import { POST_PLAN_REQUEST, PUT_PLAN_REQUEST } from './actionTypes';
+import {
+    POST_PLAN_REQUEST,
+    PUT_PLAN_REQUEST,
+    GET_PLAN_BY_ID_REQUEST,
+} from './actionTypes';
+import { getPlanByIdSuccess, getPlanByIdFailure } from './actions';
+
+function* getPlanById({ payload }) {
+    const { id } = payload;
+    try {
+        const response = yield call(api.get, `plans/${id}`);
+        yield put(getPlanByIdSuccess(response.data));
+    } catch (error) {
+        toast.error('Não foi possível buscar plano');
+        yield put(getPlanByIdFailure());
+    }
+}
 
 function* postPlan({ payload }) {
     try {
@@ -30,6 +46,7 @@ function* putPlan({ payload }) {
 }
 
 export default all([
+    takeLatest(GET_PLAN_BY_ID_REQUEST, getPlanById),
     takeLatest(POST_PLAN_REQUEST, postPlan),
     takeLatest(PUT_PLAN_REQUEST, putPlan),
 ]);
