@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Select from 'react-select';
 
 import { useField } from '@rocketseat/unform';
+import { Container } from './styles';
 
 function ReactSelect({ name, label, options, multiple, ...rest }) {
     const ref = useRef(null);
@@ -40,10 +41,18 @@ function ReactSelect({ name, label, options, multiple, ...rest }) {
     }
 
     return (
-        <>
+        <Container>
             {label && <label htmlFor={fieldName}>{label}</label>}
 
             <Select
+                styles={{
+                    control: provided => ({
+                        ...provided,
+                        border: '1px solid #ddd',
+                        height: '45px',
+                    }),
+                    indicatorSeparator: () => ({}),
+                }}
                 name={fieldName}
                 aria-label={fieldName}
                 options={options}
@@ -55,7 +64,7 @@ function ReactSelect({ name, label, options, multiple, ...rest }) {
             />
 
             {error && <span>{error}</span>}
-        </>
+        </Container>
     );
 }
 
