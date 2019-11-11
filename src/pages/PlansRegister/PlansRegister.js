@@ -19,6 +19,14 @@ import {
 
 const schema = Yup.object().shape({
     title: Yup.string('Título inválido').required('Campo obrigatório'),
+    duration: Yup.number()
+        .min(1)
+        .required('Campo obrigatório')
+        .typeError('Duração inválida'),
+    price: Yup.number()
+        .min(1, 'Preço mínimo inválido')
+        .required('Campo obrigatório')
+        .typeError('Preço inválido'),
 });
 
 function PlansRegister({ match }) {
