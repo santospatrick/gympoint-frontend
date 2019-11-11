@@ -9,7 +9,7 @@ import rootSaga from './modules/rootSaga';
 const persistConfig = {
     key: 'gympoint',
     storage,
-    whitelist: ['auth'],
+    whitelist: ['auth', 'user'],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

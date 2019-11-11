@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import logo from 'assets/logo-red.svg';
 
 import { signOut } from 'store/modules/auth/actions';
@@ -8,6 +8,7 @@ import { Container, RouterLink, Wrapper } from './styles';
 
 function Header() {
     const dispatch = useDispatch();
+    const profile = useSelector(state => state.user.profile);
 
     return (
         <Wrapper>
@@ -36,7 +37,7 @@ function Header() {
                     </ul>
                 </section>
                 <aside>
-                    <span>Patrick Santos</span>
+                    <span>{profile.name}</span>
                     <button onClick={() => dispatch(signOut())} type="button">
                         sair do sistema
                     </button>
