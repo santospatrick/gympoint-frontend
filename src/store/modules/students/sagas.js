@@ -7,12 +7,15 @@ import {
     GET_STUDENTS_REQUEST,
     POST_STUDENT_REQUEST,
     PUT_STUDENT_REQUEST,
+    DELETE_STUDENT_REQUEST,
 } from './actionTypes';
 import {
     getStudentsSuccess,
     getStudentsFailure,
     postStudentSuccess,
     postStudentFailure,
+    deleteStudentSuccess,
+    deleteStudentFailure,
 } from './actions';
 
 function* setStudents({ payload }) {
@@ -73,8 +76,23 @@ function* putStudent({ payload }) {
     }
 }
 
+function* deleteStudent({ payload }) {
+    const { student } = payload;
+    const { id, name } = student;
+
+    try {
+        yield call(api.delete, `students/${id}`);
+        yield put(deleteStudentSuccess(id));
+        toast.success(`Estudante: "${name}" deletado com sucesso!`);
+    } catch (error) {
+        yield put(deleteStudentFailure());
+        toast.error('Não foi possível deletar estudante');
+    }
+}
+
 export default all([
     takeLatest(GET_STUDENTS_REQUEST, setStudents),
     takeLatest(POST_STUDENT_REQUEST, postStudent),
     takeLatest(PUT_STUDENT_REQUEST, putStudent),
+    takeLatest(DELETE_STUDENT_REQUEST, deleteStudent),
 ]);

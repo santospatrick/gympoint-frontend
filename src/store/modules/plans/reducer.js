@@ -28,9 +28,6 @@ export default (state = initialState, { type, payload }) => {
         case GET_PLANS_FAILURE:
             return { ...state, loading: false };
 
-        case GET_PLAN_BY_ID_REQUEST:
-            return { ...state, loading: true };
-
         case DELETE_PLAN_REQUEST:
             return { ...state, loading: true };
 
@@ -38,10 +35,14 @@ export default (state = initialState, { type, payload }) => {
             return {
                 ...state,
                 list: state.list.filter(item => item.id !== payload.id),
+                loading: false,
             };
 
         case DELETE_PLAN_FAILURE:
             return { ...state, loading: false };
+
+        case GET_PLAN_BY_ID_REQUEST:
+            return { ...state, loading: true };
 
         case GET_PLAN_BY_ID_SUCCESS:
             return { ...state, item: payload.plan, loading: false };

@@ -7,7 +7,10 @@ import PageHeader, { PageHeaderContent } from 'components/PageHeader';
 import Button from 'components/Button';
 import SearchBar from 'components/SearchBar';
 import Table from 'components/Table';
-import { getStudentsRequest } from 'store/modules/students/actions';
+import {
+    getStudentsRequest,
+    deleteStudentRequest,
+} from 'store/modules/students/actions';
 import history from 'services/history';
 import { PageWrapper } from 'styles/global';
 
@@ -50,7 +53,13 @@ function Students() {
                     history.push(`/students/${item.id}`);
                 }}
                 onClickDelete={item => {
-                    console.log('onClickDelete | item:', item);
+                    const confirm = window.confirm(
+                        `Deseja deletar estudante: "${item.name}"?`,
+                    );
+
+                    if (confirm) {
+                        dispatch(deleteStudentRequest(item));
+                    }
                 }}
                 keyExtractor={item => String(item.id)}
             />

@@ -6,6 +6,9 @@ import {
     POST_STUDENT_SUCCESS,
     POST_STUDENT_FAILURE,
     PUT_STUDENT_REQUEST,
+    DELETE_STUDENT_REQUEST,
+    DELETE_STUDENT_SUCCESS,
+    DELETE_STUDENT_FAILURE,
 } from './actionTypes';
 
 export const getStudentsRequest = search => ({
@@ -39,4 +42,18 @@ export const postStudentFailure = () => ({
 export const putStudentRequest = student => ({
     type: PUT_STUDENT_REQUEST,
     payload: { student },
+});
+
+export const deleteStudentRequest = student => ({
+    type: DELETE_STUDENT_REQUEST,
+    payload: { student },
+});
+
+export const deleteStudentSuccess = id => ({
+    type: DELETE_STUDENT_SUCCESS,
+    payload: { id },
+});
+
+export const deleteStudentFailure = () => ({
+    type: DELETE_STUDENT_FAILURE,
 });

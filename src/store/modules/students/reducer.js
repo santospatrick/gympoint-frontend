@@ -5,6 +5,9 @@ import {
     POST_STUDENT_REQUEST,
     POST_STUDENT_SUCCESS,
     POST_STUDENT_FAILURE,
+    DELETE_STUDENT_REQUEST,
+    DELETE_STUDENT_SUCCESS,
+    DELETE_STUDENT_FAILURE,
 } from './actionTypes';
 
 const initialState = {
@@ -31,6 +34,19 @@ export default (state = initialState, { type, payload }) => {
 
         case POST_STUDENT_FAILURE:
             return { ...state, loading: true };
+
+        case DELETE_STUDENT_REQUEST:
+            return { ...state, loading: true };
+
+        case DELETE_STUDENT_SUCCESS:
+            return {
+                ...state,
+                list: state.list.filter(item => item.id !== payload.id),
+                loading: false,
+            };
+
+        case DELETE_STUDENT_FAILURE:
+            return { ...state, loading: false };
 
         default:
             return state;
