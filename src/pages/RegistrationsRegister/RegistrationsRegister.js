@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import * as Yup from 'yup';
 import { PageWrapper, PageCard, InputsInline } from 'styles/global';
 import PageHeader, { PageHeaderContent } from 'components/PageHeader';
@@ -9,7 +9,8 @@ import InputSelect from 'components/InputSelect';
 import api from 'services/api';
 import Input from 'components/Input';
 import InputDatePicker from 'components/InputDatePicker';
-import { format } from 'date-fns';
+import { format, addMonths } from 'date-fns';
+import { formatPrice } from 'util/format';
 
 const schema = Yup.object().shape({
     student_id: Yup.number('Estudante inválido')
@@ -22,8 +23,27 @@ const schema = Yup.object().shape({
 });
 
 function RegistrationsRegister() {
+    // Fill plans and students
     const [students, setStudents] = useState([]);
     const [plans, setPlans] = useState([]);
+
+    // Form
+    const [selectedPlan, setSelectedPlan] = useState(null);
+    const [startDate, setStartDate] = useState(null);
+
+    // Memos
+    const endDate = useMemo(() => {
+        if (!startDate || !selectedPlan) return '';
+        return format(
+            addMonths(startDate, selectedPlan.duration),
+            'dd/MM/yyyy',
+        );
+    }, [selectedPlan, startDate]);
+
+    const finalValue = useMemo(() => {
+        if (!selectedPlan) return '';
+        return formatPrice(selectedPlan.duration * selectedPlan.price);
+    }, [selectedPlan]);
 
     function handleSubmit(data) {
         const newData = {
@@ -80,22 +100,28 @@ function RegistrationsRegister() {
                                 label="Plano"
                                 placeholder="Selecione o plano"
                                 getOptionLabel={item => item.title}
+                                onChange={value => setSelectedPlan(value)}
                             />
                         )}
                         <InputDatePicker
                             label="Data de início"
                             name="start_date"
+                            dateFormat="dd/MM/yyyy"
                             minDate={new Date()}
+                            selected={startDate}
+                            onChange={value => setStartDate(value)}
                         />
                         <Input
                             disabled
                             label="Data de término"
                             name="data_termino"
+                            value={endDate}
                         />
                         <Input
                             disabled
                             label="Valor final"
                             name="data_termino"
+                            value={finalValue}
                         />
                     </InputsInline>
                 </PageCard>
