@@ -20,6 +20,7 @@ export const InputsInline = styled.div`
     display: grid;
     grid-auto-flow: column;
     grid-gap: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
 `;
 
 export default createGlobalStyle`

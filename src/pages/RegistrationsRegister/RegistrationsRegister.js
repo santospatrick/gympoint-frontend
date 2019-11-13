@@ -8,24 +8,45 @@ import { Form } from '@rocketseat/unform';
 import InputSelect from 'components/InputSelect';
 import api from 'services/api';
 import Input from 'components/Input';
+import InputDatePicker from 'components/InputDatePicker';
+import { format } from 'date-fns';
 
 const schema = Yup.object().shape({
     student_id: Yup.number('Estudante inválido')
         .required('Campo obrigatório')
         .typeError('Estudante inválido'),
+    plan_id: Yup.number('Plano inválido')
+        .required('Campo obrigatório')
+        .typeError('Plano inválido'),
+    start_date: Yup.date('Data inválida').required('Campo obrigatório'),
 });
 
 function RegistrationsRegister() {
     const [students, setStudents] = useState([]);
+    const [plans, setPlans] = useState([]);
 
-    function handleSubmit() {}
+    function handleSubmit(data) {
+        const newData = {
+            ...data,
+            // 2019-10-22T12:00:00-03:00
+            start_date: format(data.start_date, "yyyy-MM-dd'T'00:00:00XXX"),
+        };
+
+        alert(JSON.stringify(newData, null, 2));
+    }
 
     useEffect(() => {
         async function loadStudents() {
             const response = await api.get('students');
             setStudents(response.data);
         }
+        async function loadPlans() {
+            const response = await api.get('plans');
+            setPlans(response.data);
+        }
+
         loadStudents();
+        loadPlans();
     }, []);
 
     return (
@@ -52,6 +73,20 @@ function RegistrationsRegister() {
                         />
                     )}
                     <InputsInline>
+                        {!!plans.length && (
+                            <InputSelect
+                                name="plan_id"
+                                options={plans}
+                                label="Plano"
+                                placeholder="Selecione o plano"
+                                getOptionLabel={item => item.title}
+                            />
+                        )}
+                        <InputDatePicker
+                            label="Data de início"
+                            name="start_date"
+                            minDate={new Date()}
+                        />
                         <Input
                             disabled
                             label="Data de término"
