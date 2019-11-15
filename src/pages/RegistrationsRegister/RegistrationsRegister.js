@@ -107,7 +107,6 @@ function RegistrationsRegister() {
                             label="Data de início"
                             name="start_date"
                             dateFormat="dd/MM/yyyy"
-                            minDate={new Date()}
                             selected={startDate}
                             onChange={value => setStartDate(value)}
                         />

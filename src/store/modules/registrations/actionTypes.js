@@ -1,0 +1,6 @@
+export const GET_REGISTRATIONS_REQUEST =
+    '@registrations/GET_REGISTRATIONS_REQUEST';
+export const GET_REGISTRATIONS_SUCCESS =
+    '@registrations/GET_REGISTRATIONS_SUCCESS';
+export const GET_REGISTRATIONS_FAILURE =
+    '@registrations/GET_REGISTRATIONS_FAILURE';

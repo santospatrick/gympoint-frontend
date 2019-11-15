@@ -53,6 +53,12 @@ export default function Routes() {
                 component={RegistrationsRegister}
                 isPrivate
             />
+            <Route
+                path="/registrations/:id"
+                exact
+                component={RegistrationsRegister}
+                isPrivate
+            />
         </Switch>
     );
 }
