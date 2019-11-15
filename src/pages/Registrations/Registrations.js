@@ -39,7 +39,11 @@ function Registrations() {
     return (
         <PageWrapper>
             <PageHeader title="Gerenciando matrículas">
-                <Button text="Cadastrar" Icon={MdAdd} />
+                <Button
+                    onClick={() => history.push('/registrations/new')}
+                    text="Cadastrar"
+                    Icon={MdAdd}
+                />
             </PageHeader>
             <Table
                 rows={rows}

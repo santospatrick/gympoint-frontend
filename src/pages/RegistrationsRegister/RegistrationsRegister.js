@@ -1,5 +1,7 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import * as Yup from 'yup';
+import ReactRouterPropTypes from 'react-router-prop-types';
+
 import { PageWrapper, PageCard, InputsInline } from 'styles/global';
 import PageHeader, { PageHeaderContent } from 'components/PageHeader';
 import Button from 'components/Button';
@@ -9,8 +11,9 @@ import InputSelect from 'components/InputSelect';
 import api from 'services/api';
 import Input from 'components/Input';
 import InputDatePicker from 'components/InputDatePicker';
-import { format, addMonths } from 'date-fns';
+import { format, addMonths, parseISO } from 'date-fns';
 import { formatPrice } from 'util/format';
+import history from 'services/history';
 
 const schema = Yup.object().shape({
     student_id: Yup.number('Estudante inválido')
@@ -22,12 +25,16 @@ const schema = Yup.object().shape({
     start_date: Yup.date('Data inválida').required('Campo obrigatório'),
 });
 
-function RegistrationsRegister() {
+function RegistrationsRegister({ match }) {
+    const [registration, setRegistration] = useState({});
+    const { id } = match.params;
+
     // Fill plans and students
     const [students, setStudents] = useState([]);
     const [plans, setPlans] = useState([]);
 
     // Form
+    const [selectedStudent, setSelectedStudent] = useState(null);
     const [selectedPlan, setSelectedPlan] = useState(null);
     const [startDate, setStartDate] = useState(null);
 
@@ -56,6 +63,25 @@ function RegistrationsRegister() {
     }
 
     useEffect(() => {
+        if (!id || !plans.length || !students.length) return;
+
+        async function getRegistration() {
+            const response = await api.get(`registrations/${id}`);
+            const plan = plans.find(item => item.id === response.data.plan_id);
+            const student = students.find(
+                item => item.id === response.data.student_id,
+            );
+
+            setRegistration(response.data);
+            setSelectedPlan(plan);
+            setSelectedStudent(student);
+            setStartDate(parseISO(response.data.start_date));
+        }
+
+        getRegistration();
+    }, [id, plans, students]);
+
+    useEffect(() => {
         async function loadStudents() {
             const response = await api.get('students');
             setStudents(response.data);
@@ -71,11 +97,17 @@ function RegistrationsRegister() {
 
     return (
         <PageWrapper>
-            <Form schema={schema} onSubmit={handleSubmit} noValidate>
+            <Form
+                initialData={registration}
+                schema={schema}
+                onSubmit={handleSubmit}
+                noValidate
+            >
                 <PageHeader title="Cadastro de matrícula">
                     <PageHeaderContent>
                         <Button
                             text="Voltar"
+                            onClick={() => history.push('/registrations')}
                             Icon={MdKeyboardArrowLeft}
                             secondary
                         />
@@ -83,26 +115,24 @@ function RegistrationsRegister() {
                     </PageHeaderContent>
                 </PageHeader>
                 <PageCard>
-                    {!!students.length && (
-                        <InputSelect
-                            name="student_id"
-                            options={students}
-                            label="Aluno"
-                            placeholder="Buscar aluno"
-                            getOptionLabel={item => item.name}
-                        />
-                    )}
+                    <InputSelect
+                        name="student_id"
+                        options={students}
+                        label="Aluno"
+                        placeholder="Buscar aluno"
+                        getOptionLabel={item => item.name}
+                        value={selectedStudent}
+                    />
                     <InputsInline>
-                        {!!plans.length && (
-                            <InputSelect
-                                name="plan_id"
-                                options={plans}
-                                label="Plano"
-                                placeholder="Selecione o plano"
-                                getOptionLabel={item => item.title}
-                                onChange={value => setSelectedPlan(value)}
-                            />
-                        )}
+                        <InputSelect
+                            name="plan_id"
+                            options={plans}
+                            label="Plano"
+                            placeholder="Selecione o plano"
+                            getOptionLabel={item => item.title}
+                            onChange={value => setSelectedPlan(value)}
+                            value={selectedPlan}
+                        />
                         <InputDatePicker
                             label="Data de início"
                             name="start_date"
@@ -128,5 +158,9 @@ function RegistrationsRegister() {
         </PageWrapper>
     );
 }
+
+RegistrationsRegister.propTypes = {
+    match: ReactRouterPropTypes.match.isRequired,
+};
 
 export default RegistrationsRegister;
