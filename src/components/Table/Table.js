@@ -6,13 +6,23 @@ import { Container, EditButton, DeleteButton } from './styles';
 function Table({ rows, data, onClickEdit, onClickDelete, keyExtractor }) {
     if (!data.length) return null;
 
+    const cell = ({ row, item }) => {
+        if (row.render) {
+            return row.render(item);
+        }
+        if (typeof row.attribute === 'string') {
+            return item[row.attribute];
+        }
+        return row.attribute(item);
+    };
+
     return (
         <Container>
             <thead>
                 <tr>
                     {rows.map(row => (
                         <th
-                            key={`header-${row.attribute}`}
+                            key={`header-${row.label}`}
                             style={{
                                 textAlign: row.align || 'left',
                             }}
@@ -28,12 +38,12 @@ function Table({ rows, data, onClickEdit, onClickDelete, keyExtractor }) {
                     <tr key={keyExtractor(item)}>
                         {rows.map(row => (
                             <td
-                                key={`data-${row.attribute}`}
+                                key={`data-${row.label}-${item.id}`}
                                 style={{
                                     textAlign: row.align || 'left',
                                 }}
                             >
-                                {item[row.attribute]}
+                                {cell({ row, item })}
                             </td>
                         ))}
                         <td>
@@ -59,7 +69,8 @@ Table.propTypes = {
     rows: PropTypes.arrayOf(
         PropTypes.shape({
             label: PropTypes.string.isRequired,
-            attribute: PropTypes.string.isRequired,
+            attribute: PropTypes.oneOfType([PropTypes.string, PropTypes.func])
+                .isRequired,
         }),
     ),
     data: PropTypes.array,

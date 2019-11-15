@@ -8,6 +8,7 @@ import StudentsRegister from 'pages/StudentsRegister';
 import PlansRegister from 'pages/PlansRegister';
 import Plans from 'pages/Plans';
 import RegistrationsRegister from 'pages/RegistrationsRegister';
+import Registrations from 'pages/Registrations/Registrations';
 import Route from './Route';
 
 export default function Routes() {
@@ -47,6 +48,12 @@ export default function Routes() {
             />
 
             {/* Registrations */}
+            <Route
+                path="/registrations"
+                exact
+                component={Registrations}
+                isPrivate
+            />
             <Route
                 path="/registrations/new"
                 exact
