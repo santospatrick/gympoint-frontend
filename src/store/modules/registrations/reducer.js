@@ -2,6 +2,9 @@ import {
     GET_REGISTRATIONS_REQUEST,
     GET_REGISTRATIONS_SUCCESS,
     GET_REGISTRATIONS_FAILURE,
+    DELETE_REGISTRATION_SUCCESS,
+    DELETE_REGISTRATION_REQUEST,
+    DELETE_REGISTRATION_FAILURE,
 } from './actionTypes';
 
 const initialState = {
@@ -18,6 +21,19 @@ export default (state = initialState, { type, payload }) => {
             return { ...state, list: payload.list, loading: false };
 
         case GET_REGISTRATIONS_FAILURE:
+            return { ...state, loading: false };
+
+        case DELETE_REGISTRATION_REQUEST:
+            return { ...state, loading: true };
+
+        case DELETE_REGISTRATION_SUCCESS:
+            return {
+                ...state,
+                list: state.list.filter(item => item.id !== payload.id),
+                loading: false,
+            };
+
+        case DELETE_REGISTRATION_FAILURE:
             return { ...state, loading: false };
 
         default:

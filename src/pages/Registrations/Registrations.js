@@ -6,7 +6,10 @@ import { PageWrapper } from 'styles/global';
 import PageHeader from 'components/PageHeader';
 import Button from 'components/Button';
 import Table from 'components/Table';
-import { getRegistrationsRequest } from 'store/modules/registrations/actions';
+import {
+    getRegistrationsRequest,
+    deleteRegistrationRequest,
+} from 'store/modules/registrations/actions';
 import history from 'services/history';
 
 const rows = [
@@ -45,7 +48,13 @@ function Registrations() {
                     history.push(`/registrations/${item.id}`);
                 }}
                 onClickDelete={item => {
-                    alert(item);
+                    const confirm = window.confirm(
+                        `Deseja apagar a matrícula de "${item.student.name}"?`,
+                    );
+
+                    if (confirm) {
+                        dispatch(deleteRegistrationRequest(item));
+                    }
                 }}
                 keyExtractor={item => item.id}
             />
