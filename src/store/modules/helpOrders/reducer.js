@@ -1,0 +1,26 @@
+import {
+    GET_HELP_ORDERS_SUCCESS,
+    GET_HELP_ORDERS_REQUEST,
+    GET_HELP_ORDERS_FAILURE,
+} from './actionTypes';
+
+const initialState = {
+    list: [],
+    loading: false,
+};
+
+export default (state = initialState, { type, payload }) => {
+    switch (type) {
+        case GET_HELP_ORDERS_REQUEST:
+            return { ...state, loading: true };
+
+        case GET_HELP_ORDERS_SUCCESS:
+            return { ...state, list: payload.list, loading: false };
+
+        case GET_HELP_ORDERS_FAILURE:
+            return { ...state, loading: false };
+
+        default:
+            return state;
+    }
+};

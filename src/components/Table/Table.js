@@ -3,7 +3,15 @@ import PropTypes from 'prop-types';
 
 import { Container, EditButton, DeleteButton } from './styles';
 
-function Table({ rows, data, onClickEdit, onClickDelete, keyExtractor }) {
+function Table({
+    rows,
+    data,
+    onClickEdit,
+    onClickDelete,
+    keyExtractor,
+    editLabel,
+    hideDelete,
+}) {
     if (!data.length) return null;
 
     const cell = ({ row, item }) => {
@@ -49,13 +57,15 @@ function Table({ rows, data, onClickEdit, onClickDelete, keyExtractor }) {
                         <td>
                             <div>
                                 <EditButton onClick={() => onClickEdit(item)}>
-                                    editar
+                                    {editLabel}
                                 </EditButton>
-                                <DeleteButton
-                                    onClick={() => onClickDelete(item)}
-                                >
-                                    apagar
-                                </DeleteButton>
+                                {!hideDelete && (
+                                    <DeleteButton
+                                        onClick={() => onClickDelete(item)}
+                                    >
+                                        apagar
+                                    </DeleteButton>
+                                )}
                             </div>
                         </td>
                     </tr>
@@ -74,14 +84,20 @@ Table.propTypes = {
         }),
     ),
     data: PropTypes.array,
-    onClickEdit: PropTypes.func.isRequired,
-    onClickDelete: PropTypes.func.isRequired,
+    onClickEdit: PropTypes.func,
+    onClickDelete: PropTypes.func,
     keyExtractor: PropTypes.func.isRequired,
+    editLabel: PropTypes.string,
+    hideDelete: PropTypes.bool,
 };
 
 Table.defaultProps = {
     rows: [],
     data: [],
+    onClickEdit: () => {},
+    onClickDelete: () => {},
+    editLabel: 'editar',
+    hideDelete: false,
 };
 
 export default Table;

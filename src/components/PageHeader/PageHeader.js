@@ -17,7 +17,11 @@ export function PageHeaderContent({ children }) {
 
 PageHeader.propTypes = {
     title: PropTypes.string.isRequired,
-    children: PropTypes.element.isRequired,
+    children: PropTypes.element,
+};
+
+PageHeader.defaultProps = {
+    children: null,
 };
 
 PageHeaderContent.propTypes = {

@@ -9,6 +9,7 @@ import PlansRegister from 'pages/PlansRegister';
 import Plans from 'pages/Plans';
 import RegistrationsRegister from 'pages/RegistrationsRegister';
 import Registrations from 'pages/Registrations/Registrations';
+import HelpOrders from 'pages/HelpOrders';
 import Route from './Route';
 
 export default function Routes() {
@@ -66,6 +67,9 @@ export default function Routes() {
                 component={RegistrationsRegister}
                 isPrivate
             />
+
+            {/* HelpOrders */}
+            <Route path="/help-orders" exact component={HelpOrders} isPrivate />
         </Switch>
     );
 }
