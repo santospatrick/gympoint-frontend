@@ -14,7 +14,8 @@ export const Container = styled.div`
         margin-bottom: 8px;
     }
 
-    input {
+    input,
+    textarea {
         border: 1px solid #ddd;
         border-radius: 4px;
         font-size: 16px;
@@ -22,10 +23,16 @@ export const Container = styled.div`
         height: 45px;
         padding: 0 15px;
         background: ${props => props.disabled && '#F5F5F5'};
+        resize: none;
 
         &::placeholder {
             color: #999;
         }
+    }
+
+    textarea {
+        padding: 10px 15px;
+        min-height: 100px;
     }
 
     span {

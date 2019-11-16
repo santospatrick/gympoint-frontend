@@ -1,13 +1,25 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import * as Yup from 'yup';
 
 import { PageWrapper } from 'styles/global';
 import PageHeader from 'components/PageHeader';
 import Table from 'components/Table';
-import { getHelpOrdersRequest } from 'store/modules/helpOrders/actions';
+import {
+    getHelpOrdersRequest,
+    postAnswerRequest,
+} from 'store/modules/helpOrders/actions';
 import Modal from 'components/Modal';
+import { Title, Paragraph } from 'components/Typography';
+import Button from 'components/Button';
+import Input from 'components/Input';
+import { Container, Form } from './styles';
 
 const rows = [{ label: 'Aluno', attribute: item => item.student.name }];
+
+const schema = Yup.object().shape({
+    answer: Yup.string('Texto inválido').required('Campo obrigatório'),
+});
 
 function HelpOrders() {
     const [selectedItem, setSelectedItem] = useState({});
@@ -21,6 +33,17 @@ function HelpOrders() {
     useEffect(() => {
         dispatch(getHelpOrdersRequest());
     }, [dispatch]);
+
+    async function handleSubmit({ answer }) {
+        dispatch(
+            postAnswerRequest({
+                answer,
+                student: selectedItem.student.name,
+                id: selectedItem.id,
+            }),
+        );
+        setSelectedItem({});
+    }
 
     return (
         <PageWrapper>
@@ -40,7 +63,14 @@ function HelpOrders() {
                 onRequestClose={hideModal}
                 contentLabel="Minimal Modal Example"
             >
-                <button onClick={hideModal}>Close Modal</button>
+                <Container>
+                    <Title>Pergunta do aluno</Title>
+                    <Paragraph>{selectedItem.question}</Paragraph>
+                    <Form schema={schema} onSubmit={handleSubmit} noValidate>
+                        <Input label="Sua resposta" name="answer" multiline />
+                        <Button center type="submit" text="Responder aluno" />
+                    </Form>
+                </Container>
             </Modal>
         </PageWrapper>
     );

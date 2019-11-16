@@ -8,10 +8,14 @@ function Modal({ children, ...rest }) {
     return (
         <ReactModal
             style={{
+                overlay: {
+                    backgroundColor: 'rgba(0,0,0,.4)',
+                },
                 content: {
-                    maxWidth: 800,
-                    maxHeight: 600,
+                    maxWidth: 400,
+                    maxHeight: 400,
                     margin: 'auto',
+                    border: 0,
                 },
             }}
             {...rest}
@@ -22,7 +26,8 @@ function Modal({ children, ...rest }) {
 }
 
 Modal.propTypes = {
-    children: PropTypes.element.isRequired,
+    children: PropTypes.oneOfType([PropTypes.element, PropTypes.array])
+        .isRequired,
 };
 
 export default Modal;

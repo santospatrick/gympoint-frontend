@@ -10,10 +10,11 @@ export const Container = styled.button`
     display: flex;
     flex-direction: row;
     align-items: center;
+    justify-content: ${props => props.center && 'center'};
 
     span {
         display: block;
-        margin-left: 6px;
+        margin-left: ${props => !props.center && '6px'};
         text-transform: uppercase;
         font-size: 14px;
         font-weight: bold;
