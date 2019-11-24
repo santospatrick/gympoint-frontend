@@ -21,10 +21,15 @@ const sagaMonitor =
 
 const sagaMiddleware = createSagaMiddleware({ sagaMonitor });
 
-const store = createStore(
-    persistedReducer,
-    compose(applyMiddleware(sagaMiddleware), console.tron.createEnhancer()),
-);
+const enhancer =
+    process.env.NODE_ENV === 'development'
+        ? compose(
+              applyMiddleware(sagaMiddleware),
+              console.tron.createEnhancer(),
+          )
+        : applyMiddleware(sagaMiddleware);
+
+const store = createStore(persistedReducer, enhancer);
 
 sagaMiddleware.run(rootSaga);
 
