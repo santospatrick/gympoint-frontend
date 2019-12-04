@@ -3,7 +3,7 @@ Gym management application (registrations/check-ins)
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/486ce63e-ec8f-4f50-a4c7-a84d24f0d133/deploy-status)](https://app.netlify.com/sites/sad-goldberg-d09b8b/deploys)
 
-[Preview](docs/preview.png)
+[Preview](https://gympoint.santospatrick.com/)
 
 <a href="https://gympoint.santospatrick.com/" rel="Facebook posts site preview">![Preview](docs/preview.png)</a>
 
