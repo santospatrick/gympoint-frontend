@@ -13,6 +13,7 @@ import Modal from 'components/Modal';
 import { Title, Paragraph } from 'components/Typography';
 import Button from 'components/Button';
 import Input from 'components/Input';
+import Loading from 'components/Loading';
 import { Container, Form } from './styles';
 
 const rows = [{ label: 'Aluno', attribute: item => item.student.name }];
@@ -25,6 +26,7 @@ function HelpOrders() {
     const [selectedItem, setSelectedItem] = useState({});
     const dispatch = useDispatch();
     const data = useSelector(state => state.helpOrders.list);
+    const loading = useSelector(state => state.helpOrders.loading);
 
     const hideModal = useCallback(() => {
         setSelectedItem({});
@@ -46,18 +48,22 @@ function HelpOrders() {
     }
 
     return (
-        <PageWrapper>
+        <PageWrapper medium>
             <PageHeader title="Pedidos de auxílio" />
-            <Table
-                rows={rows}
-                data={data}
-                keyExtractor={item => item.id}
-                onClickEdit={item => {
-                    setSelectedItem(item);
-                }}
-                editLabel="responder"
-                hideDelete
-            />
+            {loading ? (
+                <Loading />
+            ) : (
+                <Table
+                    rows={rows}
+                    data={data}
+                    keyExtractor={item => item.id}
+                    onClickEdit={item => {
+                        setSelectedItem(item);
+                    }}
+                    editLabel="responder"
+                    hideDelete
+                />
+            )}
             <Modal
                 isOpen={!!selectedItem.id}
                 onRequestClose={hideModal}

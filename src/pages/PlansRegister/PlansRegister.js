@@ -16,6 +16,7 @@ import {
     getPlanByIdRequest,
     cleanPlanItem,
 } from 'store/modules/plans/actions';
+import Loading from 'components/Loading';
 
 const schema = Yup.object().shape({
     title: Yup.string('Título inválido').required('Campo obrigatório'),
@@ -31,6 +32,7 @@ const schema = Yup.object().shape({
 
 function PlansRegister({ match }) {
     const plan = useSelector(state => state.plans.item);
+    const loading = useSelector(state => state.plans.loading);
     const dispatch = useDispatch();
     const [duration, setDuration] = useState('');
     const [price, setPrice] = useState('');
@@ -68,15 +70,22 @@ function PlansRegister({ match }) {
         }
     }, [plan, plan.id]);
 
+    if (loading) {
+        return (
+            <PageWrapper>
+                <Loading />
+            </PageWrapper>
+        );
+    }
+
     return (
         <PageWrapper>
             <Form
-                initialData={plan}
+                initialData={{ title: plan.title }}
                 schema={schema}
                 onSubmit={handleSubmit}
-                context={{ duration, total, price }}
             >
-                <PageHeader title="Cadastro de plano">
+                <PageHeader title={`${id ? 'Edição' : 'Cadastro'} de plano`}>
                     <PageHeaderContent>
                         <Button
                             onClick={() => history.push('/plans')}

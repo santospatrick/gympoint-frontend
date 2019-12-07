@@ -5,7 +5,7 @@ import 'react-toastify/dist/ReactToastify.min.css';
 export const PageWrapper = styled.div`
     width: 100%;
     padding: 30px;
-    max-width: 1200px;
+    max-width: ${props => (props.medium ? '800px' : '1200px')};
     margin: 0 auto;
 `;
 
@@ -59,5 +59,9 @@ export default createGlobalStyle`
 
     button {
         cursor: pointer;
+    }
+
+    .gympoint-loading {
+        margin: auto;
     }
 `;

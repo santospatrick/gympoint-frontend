@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useMemo } from 'react';
+import { useDispatch } from 'react-redux';
 import * as Yup from 'yup';
 import ReactRouterPropTypes from 'react-router-prop-types';
 
@@ -14,6 +15,11 @@ import InputDatePicker from 'components/InputDatePicker';
 import { format, addMonths, parseISO } from 'date-fns';
 import { formatPrice } from 'util/format';
 import history from 'services/history';
+import {
+    postRegistrationRequest,
+    putRegistrationRequest,
+} from 'store/modules/registrations/actions';
+import Loading from 'components/Loading';
 
 const schema = Yup.object().shape({
     student_id: Yup.number('Estudante inválido')
@@ -26,6 +32,9 @@ const schema = Yup.object().shape({
 });
 
 function RegistrationsRegister({ match }) {
+    const dispatch = useDispatch();
+    const [loading, setLoading] = useState(false);
+
     const [registration, setRegistration] = useState({});
     const { id } = match.params;
 
@@ -59,13 +68,18 @@ function RegistrationsRegister({ match }) {
             start_date: format(data.start_date, "yyyy-MM-dd'T'00:00:00XXX"),
         };
 
-        alert(JSON.stringify(newData, null, 2));
+        if (id) {
+            dispatch(putRegistrationRequest({ id, ...newData }));
+        } else {
+            dispatch(postRegistrationRequest(newData));
+        }
     }
 
     useEffect(() => {
         if (!id || !plans.length || !students.length) return;
 
         async function getRegistration() {
+            setLoading(true);
             const response = await api.get(`registrations/${id}`);
             const plan = plans.find(item => item.id === response.data.plan_id);
             const student = students.find(
@@ -76,6 +90,7 @@ function RegistrationsRegister({ match }) {
             setSelectedPlan(plan);
             setSelectedStudent(student);
             setStartDate(parseISO(response.data.start_date));
+            setLoading(false);
         }
 
         getRegistration();
@@ -95,6 +110,14 @@ function RegistrationsRegister({ match }) {
         loadPlans();
     }, []);
 
+    if (loading) {
+        return (
+            <PageWrapper>
+                <Loading />
+            </PageWrapper>
+        );
+    }
+
     return (
         <PageWrapper>
             <Form
@@ -103,7 +126,9 @@ function RegistrationsRegister({ match }) {
                 onSubmit={handleSubmit}
                 noValidate
             >
-                <PageHeader title="Cadastro de matrícula">
+                <PageHeader
+                    title={`${id ? 'Edição' : 'Cadastro'} de matrícula`}
+                >
                     <PageHeaderContent>
                         <Button
                             text="Voltar"
@@ -139,6 +164,7 @@ function RegistrationsRegister({ match }) {
                             dateFormat="dd/MM/yyyy"
                             selected={startDate}
                             onChange={value => setStartDate(value)}
+                            autoComplete="off"
                         />
                         <Input
                             disabled
