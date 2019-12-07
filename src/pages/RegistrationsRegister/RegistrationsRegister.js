@@ -119,7 +119,9 @@ function RegistrationsRegister({ match }) {
                 onSubmit={handleSubmit}
                 noValidate
             >
-                <PageHeader title="Cadastro de matrícula">
+                <PageHeader
+                    title={`${id ? 'Edição' : 'Cadastro'} de matrícula`}
+                >
                     <PageHeaderContent>
                         <Button
                             text="Voltar"

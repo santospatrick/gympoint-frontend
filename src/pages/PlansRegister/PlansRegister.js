@@ -85,7 +85,7 @@ function PlansRegister({ match }) {
                 schema={schema}
                 onSubmit={handleSubmit}
             >
-                <PageHeader title="Cadastro de plano">
+                <PageHeader title={`${id ? 'Edição' : 'Cadastro'} de plano`}>
                     <PageHeaderContent>
                         <Button
                             onClick={() => history.push('/plans')}

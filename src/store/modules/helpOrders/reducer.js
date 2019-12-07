@@ -30,6 +30,7 @@ export default (state = initialState, { type, payload }) => {
             return {
                 ...state,
                 list: state.list.filter(item => item.id !== payload.id),
+                loading: false,
             };
 
         case POST_ANSWER_FAILURE:

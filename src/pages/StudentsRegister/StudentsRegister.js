@@ -80,7 +80,7 @@ function StudentsRegister({ match }) {
                 onSubmit={handleSubmit}
                 noValidate
             >
-                <PageHeader title="Cadastro de aluno">
+                <PageHeader title={`${id ? 'Edição' : 'Cadastro'} de aluno`}>
                     <PageHeaderContent>
                         <Button
                             onClick={() => history.push('/students')}

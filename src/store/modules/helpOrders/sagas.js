@@ -3,7 +3,11 @@ import api from 'services/api';
 import { toast } from 'react-toastify';
 
 import { GET_HELP_ORDERS_REQUEST, POST_ANSWER_REQUEST } from './actionTypes';
-import { getHelpOrdersSuccess, postAnswerSuccess } from './actions';
+import {
+    getHelpOrdersSuccess,
+    postAnswerSuccess,
+    postAnswerFailure,
+} from './actions';
 
 function* getHelpOrders() {
     try {
@@ -24,6 +28,7 @@ function* postAnswer({ payload }) {
         yield put(postAnswerSuccess(id));
         toast.success(`Pergunta de: "${student}" respondida do sucesso!`);
     } catch (error) {
+        yield put(postAnswerFailure());
         toast.success('Não foi possível responder pergunta');
     }
 }
