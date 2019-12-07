@@ -2,14 +2,18 @@ import { all, takeLatest, call, put } from 'redux-saga/effects';
 import api from 'services/api';
 import { toast } from 'react-toastify';
 import { format, parseISO } from 'date-fns';
+import history from 'services/history';
 import {
     getRegistrationsFailure,
     getRegistrationsSuccess,
     deleteRegistrationSuccess,
+    postRegistrationSuccess,
+    postRegistrationFailure,
 } from './actions';
 import {
     GET_REGISTRATIONS_REQUEST,
     DELETE_REGISTRATION_REQUEST,
+    POST_REGISTRATION_REQUEST,
 } from './actionTypes';
 
 function* getRegistrations() {
@@ -49,7 +53,27 @@ function* deleteRegistration({ payload }) {
     }
 }
 
+function* postRegistration({ payload }) {
+    const { start_date, student_id, plan_id } = payload;
+
+    try {
+        yield call(api.post, 'registrations', {
+            start_date,
+            student_id,
+            plan_id,
+        });
+        yield put(postRegistrationSuccess());
+
+        toast.success('Matrícula cadastrada com sucesso!');
+        history.push('/registrations');
+    } catch (error) {
+        yield put(postRegistrationFailure());
+        toast.error('Não foi possível cadastrar matrícula');
+    }
+}
+
 export default all([
     takeLatest(GET_REGISTRATIONS_REQUEST, getRegistrations),
     takeLatest(DELETE_REGISTRATION_REQUEST, deleteRegistration),
+    takeLatest(POST_REGISTRATION_REQUEST, postRegistration),
 ]);

@@ -30,10 +30,10 @@ export default (state = initialState, { type, payload }) => {
             return { ...state, loading: true };
 
         case POST_STUDENT_SUCCESS:
-            return { ...state, loading: true };
+            return { ...state, loading: false };
 
         case POST_STUDENT_FAILURE:
-            return { ...state, loading: true };
+            return { ...state, loading: false };
 
         case DELETE_STUDENT_REQUEST:
             return { ...state, loading: true };

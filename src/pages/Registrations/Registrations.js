@@ -11,6 +11,7 @@ import {
     deleteRegistrationRequest,
 } from 'store/modules/registrations/actions';
 import history from 'services/history';
+import Loading from 'components/Loading';
 
 const rows = [
     { label: 'Aluno', attribute: item => item.student.name },
@@ -31,6 +32,7 @@ const rows = [
 function Registrations() {
     const dispatch = useDispatch();
     const data = useSelector(state => state.registrations.list);
+    const loading = useSelector(state => state.registrations.loading);
 
     useEffect(() => {
         dispatch(getRegistrationsRequest());
@@ -45,23 +47,27 @@ function Registrations() {
                     Icon={MdAdd}
                 />
             </PageHeader>
-            <Table
-                rows={rows}
-                data={data}
-                onClickEdit={item => {
-                    history.push(`/registrations/${item.id}`);
-                }}
-                onClickDelete={item => {
-                    const confirm = window.confirm(
-                        `Deseja apagar a matrícula de "${item.student.name}"?`,
-                    );
+            {loading ? (
+                <Loading />
+            ) : (
+                <Table
+                    rows={rows}
+                    data={data}
+                    onClickEdit={item => {
+                        history.push(`/registrations/${item.id}`);
+                    }}
+                    onClickDelete={item => {
+                        const confirm = window.confirm(
+                            `Deseja apagar a matrícula de "${item.student.name}"?`,
+                        );
 
-                    if (confirm) {
-                        dispatch(deleteRegistrationRequest(item));
-                    }
-                }}
-                keyExtractor={item => item.id}
-            />
+                        if (confirm) {
+                            dispatch(deleteRegistrationRequest(item));
+                        }
+                    }}
+                    keyExtractor={item => item.id}
+                />
+            )}
         </PageWrapper>
     );
 }

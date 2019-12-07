@@ -5,6 +5,9 @@ import {
     DELETE_REGISTRATION_REQUEST,
     DELETE_REGISTRATION_SUCCESS,
     DELETE_REGISTRATION_FAILURE,
+    POST_REGISTRATION_REQUEST,
+    POST_REGISTRATION_SUCCESS,
+    POST_REGISTRATION_FAILURE,
 } from './actionTypes';
 
 export const getRegistrationsRequest = () => ({
@@ -33,4 +36,21 @@ export const deleteRegistrationSuccess = id => ({
 export const deleteRegistrationFailure = item => ({
     type: DELETE_REGISTRATION_FAILURE,
     payload: { item },
+});
+
+export const postRegistrationRequest = ({
+    start_date,
+    student_id,
+    plan_id,
+}) => ({
+    type: POST_REGISTRATION_REQUEST,
+    payload: { start_date, student_id, plan_id },
+});
+
+export const postRegistrationSuccess = () => ({
+    type: POST_REGISTRATION_SUCCESS,
+});
+
+export const postRegistrationFailure = () => ({
+    type: POST_REGISTRATION_FAILURE,
 });

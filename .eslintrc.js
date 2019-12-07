@@ -36,7 +36,8 @@ module.exports = {
     'react/forbid-prop-types': 'off',
     'no-param-reassign': 'off',
     'no-console': ['error', { allow: ['tron'] }],
-    'no-alert': 'off'
+    'no-alert': 'off',
+    'camelcase': 'off'
   },
   settings: {
     "import/resolver": {

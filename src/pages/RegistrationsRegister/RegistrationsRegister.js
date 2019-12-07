@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useMemo } from 'react';
+import { useDispatch } from 'react-redux';
 import * as Yup from 'yup';
 import ReactRouterPropTypes from 'react-router-prop-types';
 
@@ -14,6 +15,7 @@ import InputDatePicker from 'components/InputDatePicker';
 import { format, addMonths, parseISO } from 'date-fns';
 import { formatPrice } from 'util/format';
 import history from 'services/history';
+import { postRegistrationRequest } from 'store/modules/registrations/actions';
 
 const schema = Yup.object().shape({
     student_id: Yup.number('Estudante inválido')
@@ -26,6 +28,7 @@ const schema = Yup.object().shape({
 });
 
 function RegistrationsRegister({ match }) {
+    const dispatch = useDispatch();
     const [registration, setRegistration] = useState({});
     const { id } = match.params;
 
@@ -59,7 +62,7 @@ function RegistrationsRegister({ match }) {
             start_date: format(data.start_date, "yyyy-MM-dd'T'00:00:00XXX"),
         };
 
-        alert(JSON.stringify(newData, null, 2));
+        dispatch(postRegistrationRequest(newData));
     }
 
     useEffect(() => {
@@ -139,6 +142,7 @@ function RegistrationsRegister({ match }) {
                             dateFormat="dd/MM/yyyy"
                             selected={startDate}
                             onChange={value => setStartDate(value)}
+                            autoComplete="off"
                         />
                         <Input
                             disabled

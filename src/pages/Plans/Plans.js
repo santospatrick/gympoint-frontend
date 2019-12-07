@@ -14,8 +14,8 @@ import Loading from 'components/Loading';
 
 const rows = [
     { label: 'Título', attribute: 'title' },
-    { label: 'Duração', attribute: 'duration' },
-    { label: 'Valor p/ MÊS', attribute: 'formattedPrice' },
+    { label: 'Duração', attribute: 'duration', align: 'center' },
+    { label: 'Valor p/ MÊS', attribute: 'formattedPrice', align: 'center' },
 ];
 
 function Plans() {
