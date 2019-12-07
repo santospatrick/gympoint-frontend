@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Container, EditButton, DeleteButton } from './styles';
+import { Container, EditButton, DeleteButton, Empty } from './styles';
 
 function Table({
     rows,
@@ -12,7 +12,9 @@ function Table({
     editLabel,
     hideDelete,
 }) {
-    if (!data.length) return null;
+    if (!data.length) {
+        return <Empty>Nenhum registro encontrado</Empty>;
+    }
 
     const cell = ({ row, item }) => {
         if (row.render) {

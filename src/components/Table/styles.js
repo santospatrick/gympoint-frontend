@@ -1,5 +1,13 @@
 import styled from 'styled-components';
 
+export const Empty = styled.div`
+    width: 100%;
+    background: #fff;
+    padding: 30px;
+    border-radius: 4px;
+    text-align: center;
+`;
+
 export const Container = styled.table`
     width: 100%;
     background: #fff;
