@@ -13,6 +13,7 @@ import {
 } from 'store/modules/students/actions';
 import history from 'services/history';
 import { PageWrapper } from 'styles/global';
+import Loading from 'components/Loading';
 
 const rows = [
     { label: 'Nome', attribute: 'name' },
@@ -25,6 +26,7 @@ function Students() {
     const [text, setText] = useState('');
     const [value] = useDebounce(text, 250);
     const data = useSelector(state => state.students.list);
+    const loading = useSelector(state => state.students.loading);
 
     useEffect(() => {
         dispatch(getStudentsRequest(value));
@@ -46,23 +48,27 @@ function Students() {
                     />
                 </PageHeaderContent>
             </PageHeader>
-            <Table
-                rows={rows}
-                data={data}
-                onClickEdit={item => {
-                    history.push(`/students/${item.id}`);
-                }}
-                onClickDelete={item => {
-                    const confirm = window.confirm(
-                        `Deseja deletar estudante: "${item.name}"?`,
-                    );
+            {loading ? (
+                <Loading />
+            ) : (
+                <Table
+                    rows={rows}
+                    data={data}
+                    onClickEdit={item => {
+                        history.push(`/students/${item.id}`);
+                    }}
+                    onClickDelete={item => {
+                        const confirm = window.confirm(
+                            `Deseja deletar estudante: "${item.name}"?`,
+                        );
 
-                    if (confirm) {
-                        dispatch(deleteStudentRequest(item));
-                    }
-                }}
-                keyExtractor={item => String(item.id)}
-            />
+                        if (confirm) {
+                            dispatch(deleteStudentRequest(item));
+                        }
+                    }}
+                    keyExtractor={item => String(item.id)}
+                />
+            )}
         </PageWrapper>
     );
 }

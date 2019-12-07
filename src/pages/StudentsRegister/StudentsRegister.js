@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import ReactLoading from 'react-loading';
 import ReactRouterPropTypes from 'react-router-prop-types';
 import * as Yup from 'yup';
 import { useDispatch } from 'react-redux';
