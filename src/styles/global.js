@@ -60,4 +60,8 @@ export default createGlobalStyle`
     button {
         cursor: pointer;
     }
+
+    .gympoint-loading {
+        margin: auto;
+    }
 `;

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
+import ReactLoading from 'react-loading';
 import ReactRouterPropTypes from 'react-router-prop-types';
 import * as Yup from 'yup';
-import InputMask from 'react-input-mask';
 import { useDispatch } from 'react-redux';
 
 import { PageWrapper, PageCard, InputsInline } from 'styles/global';
@@ -17,6 +17,7 @@ import {
     putStudentRequest,
 } from 'store/modules/students/actions';
 import api from 'services/api';
+import Loading from 'components/Loading';
 
 const schema = Yup.object().shape({
     name: Yup.string().required('Campo obrigatório'),
@@ -27,26 +28,27 @@ const schema = Yup.object().shape({
         .positive('Idade deve ser maior que zero')
         .required('Campo obrigatório')
         .typeError('Número inválido'),
-    weight: Yup.string().required('Campo obrigatório'),
-    height: Yup.string().required('Campo obrigatório'),
+    weight: Yup.number()
+        .positive('Peso deve ser maior que zero')
+        .required('Campo obrigatório')
+        .typeError('Número inválido'),
+    height: Yup.number()
+        .positive('Altura deve ser maior que zero')
+        .required('Campo obrigatório')
+        .typeError('Número inválido'),
 });
 
 function StudentsRegister({ match }) {
     const [student, setStudent] = useState({});
+    const [loading, setLoading] = useState(false);
     const dispatch = useDispatch();
     const { id } = match.params;
 
     function handleSubmit(data) {
-        const newData = {
-            ...data,
-            weight: parseFloat(data.weight, 10),
-            height: parseInt(data.height.replace('.', '').replace('m', ''), 10),
-        };
-
         if (id) {
-            dispatch(putStudentRequest(newData));
+            dispatch(putStudentRequest(data));
         } else {
-            dispatch(postStudentRequest(newData));
+            dispatch(postStudentRequest(data));
         }
     }
 
@@ -54,12 +56,22 @@ function StudentsRegister({ match }) {
         if (!id) return;
 
         async function loadStudent() {
+            setLoading(true);
             const response = await api.get(`students/${parseInt(id, 10)}`);
+            setLoading(false);
             setStudent(response.data);
         }
 
         loadStudent();
     }, [id]);
+
+    if (loading) {
+        return (
+            <PageWrapper>
+                <Loading />
+            </PageWrapper>
+        );
+    }
 
     return (
         <PageWrapper>
@@ -94,71 +106,8 @@ function StudentsRegister({ match }) {
                     />
                     <InputsInline>
                         <Input label="Idade" name="age" type="number" />
-
-                        {/* TODO:
-                            InputMask defaultValue cannot be set
-                            asynchronously, so component waits for backend
-                            to give a response to render input.
-                            Should i continue to use react-input-mask + unform?
-                        */}
-                        {student.weight && (
-                            <InputMask
-                                mask="99.9kg"
-                                defaultValue={
-                                    student.weight.toString().length === 2
-                                        ? `${student.weight}.0`
-                                        : student.weight
-                                }
-                                disabled={false}
-                                alwaysShowMask
-                            >
-                                {() => (
-                                    <Input label="Peso (em kg)" name="weight" />
-                                )}
-                            </InputMask>
-                        )}
-
-                        {/* TODO:
-                            This input is rendered when nothing is loaded from backend
-                            and it does not render right with ternary (dont know why yet)
-                        */}
-                        {!Object.keys(student).length && (
-                            <InputMask
-                                mask="99.9kg"
-                                disabled={false}
-                                alwaysShowMask
-                            >
-                                {() => (
-                                    <Input label="Peso (em kg)" name="weight" />
-                                )}
-                            </InputMask>
-                        )}
-                        {/* TODO:
-                            InputMask defaultValue cannot be set
-                            asynchronously, so component waits for backend
-                            to give a response to render input.
-                            Should i continue to use react-input-mask + unform?
-                        */}
-                        {student.height && (
-                            <InputMask
-                                mask="9.99m"
-                                defaultValue={student.height}
-                                alwaysShowMask
-                                disabled={false}
-                            >
-                                {() => <Input label="Altura" name="height" />}
-                            </InputMask>
-                        )}
-
-                        {!Object.keys(student).length && (
-                            <InputMask
-                                mask="9.99m"
-                                alwaysShowMask
-                                disabled={false}
-                            >
-                                {() => <Input label="Altura" name="height" />}
-                            </InputMask>
-                        )}
+                        <Input label="Peso (em kg)" name="weight" />
+                        <Input label="Altura" name="height" />
                     </InputsInline>
                 </PageCard>
             </Form>
