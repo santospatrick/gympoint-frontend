@@ -8,6 +8,9 @@ import {
     POST_REGISTRATION_REQUEST,
     POST_REGISTRATION_SUCCESS,
     POST_REGISTRATION_FAILURE,
+    PUT_REGISTRATION_REQUEST,
+    PUT_REGISTRATION_SUCCESS,
+    PUT_REGISTRATION_FAILURE,
 } from './actionTypes';
 
 export const getRegistrationsRequest = () => ({
@@ -53,4 +56,22 @@ export const postRegistrationSuccess = () => ({
 
 export const postRegistrationFailure = () => ({
     type: POST_REGISTRATION_FAILURE,
+});
+
+export const putRegistrationRequest = ({
+    id,
+    start_date,
+    student_id,
+    plan_id,
+}) => ({
+    type: PUT_REGISTRATION_REQUEST,
+    payload: { id, start_date, student_id, plan_id },
+});
+
+export const putRegistrationSuccess = () => ({
+    type: PUT_REGISTRATION_SUCCESS,
+});
+
+export const putRegistrationFailure = () => ({
+    type: PUT_REGISTRATION_FAILURE,
 });

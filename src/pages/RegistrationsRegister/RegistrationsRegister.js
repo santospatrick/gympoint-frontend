@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useMemo } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import * as Yup from 'yup';
 import ReactRouterPropTypes from 'react-router-prop-types';
 
@@ -15,7 +15,10 @@ import InputDatePicker from 'components/InputDatePicker';
 import { format, addMonths, parseISO } from 'date-fns';
 import { formatPrice } from 'util/format';
 import history from 'services/history';
-import { postRegistrationRequest } from 'store/modules/registrations/actions';
+import {
+    postRegistrationRequest,
+    putRegistrationRequest,
+} from 'store/modules/registrations/actions';
 import Loading from 'components/Loading';
 
 const schema = Yup.object().shape({
@@ -65,7 +68,11 @@ function RegistrationsRegister({ match }) {
             start_date: format(data.start_date, "yyyy-MM-dd'T'00:00:00XXX"),
         };
 
-        dispatch(postRegistrationRequest(newData));
+        if (id) {
+            dispatch(putRegistrationRequest({ id, ...newData }));
+        } else {
+            dispatch(postRegistrationRequest(newData));
+        }
     }
 
     useEffect(() => {

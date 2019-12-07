@@ -8,6 +8,9 @@ import {
     POST_REGISTRATION_REQUEST,
     POST_REGISTRATION_SUCCESS,
     POST_REGISTRATION_FAILURE,
+    PUT_REGISTRATION_REQUEST,
+    PUT_REGISTRATION_SUCCESS,
+    PUT_REGISTRATION_FAILURE,
 } from './actionTypes';
 
 const initialState = {
@@ -46,6 +49,15 @@ export default (state = initialState, { type, payload }) => {
             return { ...state, loading: false };
 
         case POST_REGISTRATION_FAILURE:
+            return { ...state, loading: false };
+
+        case PUT_REGISTRATION_REQUEST:
+            return { ...state, loading: true };
+
+        case PUT_REGISTRATION_SUCCESS:
+            return { ...state, loading: false };
+
+        case PUT_REGISTRATION_FAILURE:
             return { ...state, loading: false };
 
         default:

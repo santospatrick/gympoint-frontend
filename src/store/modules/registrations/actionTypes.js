@@ -18,3 +18,10 @@ export const POST_REGISTRATION_SUCCESS =
     '@registrations/POST_REGISTRATION_SUCCESS';
 export const POST_REGISTRATION_FAILURE =
     '@registrations/POST_REGISTRATION_FAILURE';
+
+export const PUT_REGISTRATION_REQUEST =
+    '@registrations/PUT_REGISTRATION_REQUEST';
+export const PUT_REGISTRATION_SUCCESS =
+    '@registrations/PUT_REGISTRATION_SUCCESS';
+export const PUT_REGISTRATION_FAILURE =
+    '@registrations/PUT_REGISTRATION_FAILURE';

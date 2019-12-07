@@ -9,11 +9,13 @@ import {
     deleteRegistrationSuccess,
     postRegistrationSuccess,
     postRegistrationFailure,
+    putRegistrationSuccess,
 } from './actions';
 import {
     GET_REGISTRATIONS_REQUEST,
     DELETE_REGISTRATION_REQUEST,
     POST_REGISTRATION_REQUEST,
+    PUT_REGISTRATION_REQUEST,
 } from './actionTypes';
 
 function* getRegistrations() {
@@ -72,8 +74,28 @@ function* postRegistration({ payload }) {
     }
 }
 
+function* putRegistration({ payload }) {
+    const { id, start_date, student_id, plan_id } = payload;
+
+    try {
+        yield call(api.put, `registrations/${id}`, {
+            start_date,
+            student_id,
+            plan_id,
+        });
+
+        yield put(putRegistrationSuccess());
+
+        toast.success('Matrícula atualizada com sucesso!');
+    } catch (error) {
+        yield put(postRegistrationFailure());
+        toast.error('Não foi possível atualizar matrícula');
+    }
+}
+
 export default all([
     takeLatest(GET_REGISTRATIONS_REQUEST, getRegistrations),
     takeLatest(DELETE_REGISTRATION_REQUEST, deleteRegistration),
     takeLatest(POST_REGISTRATION_REQUEST, postRegistration),
+    takeLatest(PUT_REGISTRATION_REQUEST, putRegistration),
 ]);
